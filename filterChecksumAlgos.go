@@ -13,10 +13,11 @@ import (
 
 // Man, why don't people allow their table to be exported...
 var checksumLookupTable = map[string]crypto.Hash{
-    "md5":    crypto.MD5,
-    "sha1":   crypto.SHA1,
-    "sha256": crypto.SHA256,
-    "sha512": crypto.SHA512,
+    "md5":       crypto.MD5,
+    "sha1":      crypto.SHA1,
+    "sha256":    crypto.SHA256,
+    "sha256sum": crypto.SHA256,
+    "sha512":    crypto.SHA512,
 }
 
 var checksumAlgos = map[string]crypto.Hash{}

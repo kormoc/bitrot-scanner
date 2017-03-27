@@ -1,0 +1,22 @@
+hash: bb1856e7368d9a95cba24f1dec9bcd897d69cb5fbeadf2f03dd2c1c6cbe46dff
+updated: 2017-03-26T21:23:31.046253253-07:00
+imports:
+- name: github.com/buger/goterm
+  version: bc6c333206f446a53cac4db5d2e6a4316139d737
+- name: github.com/davecheney/xattr
+  version: dc6dbbe49f0b0bfcc98dedef66662d93462a720c
+- name: github.com/kormoc/ionice
+  version: aef1c6cc469279ebd5348695a7aad604bbacdf14
+- name: github.com/mattn/go-isatty
+  version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
+- name: github.com/nightlyone/lockfile
+  version: 1d49c987357a327b5b03aa84cbddd582c328615d
+- name: github.com/vbauerster/mpb
+  version: 6013267b5c3d60409c5c34800d4832b813d6178d
+  subpackages:
+  - cwriter
+- name: golang.org/x/sys
+  version: afadfcc7779c1f4db0f6f6438afcb108d9c9c7cd
+  subpackages:
+  - unix
+testImports: []

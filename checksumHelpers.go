@@ -53,8 +53,7 @@ func checksumPath(path string) (map[string]string, error) {
         bar = progressBar.AddBar(fileSize).
                 PrependName(path, 0, mpb.DwidthSync|mpb.DidentRight).
                 PrependCounters("%3s / %3s", mpb.UnitBytes, 18, mpb.DwidthSync|mpb.DextraSpace).
-                AppendPercentage(3, 0).
-                AppendETA(6, mpb.DwidthSync|mpb.DextraSpace)
+                AppendPercentage(3, 0)
         rp = bufio.NewReader(bar.ProxyReader(fp))
     } else {
         rp = bufio.NewReader(fp)

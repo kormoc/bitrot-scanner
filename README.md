@@ -15,7 +15,7 @@ Generally the best way to handle this is to run `bitrot_scanner` via cron on a c
 
 This mode will create checksums for any files missing them and validate any checksums that exist. Useful if you want to create checksums and validate on the same schedule.
 
-`bitrot_scanner /path/to/directory/1 /path/to/directory/2 ...`
+`bitrot_scanner -progressBar /path/to/directory/1 /path/to/directory/2 ...`
 
 ## Advanced Mode
 

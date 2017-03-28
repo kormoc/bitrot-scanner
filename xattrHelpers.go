@@ -44,10 +44,9 @@ func GetxattrString(path string, name string) (string, error) {
 }
 
 func SetxattrString(path string, name string, data string) error {
-    dataBytes := []byte(data)
-    Trace.Printf("%v: Set: %v: %v\n", path, name, dataBytes)
+    Trace.Printf("%v: Set: %v: %v\n", path, name, data)
 
-    return xattr.Setxattr(path, fixNameForLinux(name), dataBytes)
+    return xattr.Setxattr(path, fixNameForLinux(name), []byte(data))
 }
 
 func Removexattr(path string, name string) error {

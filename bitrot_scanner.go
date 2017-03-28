@@ -47,7 +47,12 @@ func main() {
     }
 
     if enableProgressBar {
-        progressBar = mpb.New().SetWidth(goterm.Width())
+        if (debug || verbose) && workerCount > 1 {
+            Warn.Println("-progressBar requires -workerCount=1 with -debug or -verbose, disabling -progressBar")
+        } else {
+            progressBar = mpb.New().SetWidth(goterm.Width())
+        }
+
     }
 
     var workerFunc filepath.WalkFunc

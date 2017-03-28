@@ -19,12 +19,12 @@ func workerChecksum(path string, info os.FileInfo, err error) error {
         return nil
     }
 
-    if !missingChecksums(path) && skipValidation {
+    if skipValidation && !missingChecksums(path) {
         Info.Println(path + ": Already has all checksums. Skipping due to -skipValidation")
         return nil
     }
 
-    if missingChecksums(path) && checksumCount(path) == 0 && skipCreate {
+    if skipCreate && missingChecksums(path) && checksumCount(path) == 0 {
         Info.Println(path + ": Missing all checksums. Skipping due to -skipCreate")
         return nil
     }

@@ -75,7 +75,7 @@ func checksumPath(path string) (map[string]string, error) {
         }
 
         for checksumAlgo := range checksumLookupTable {
-            hashers[checksumAlgo].Write(buffer)
+            hashers[checksumAlgo].Write(buffer[:amountRead])
         }
     }
 

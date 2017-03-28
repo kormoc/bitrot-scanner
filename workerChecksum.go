@@ -60,16 +60,16 @@ func workerChecksum(path string, info os.FileInfo, err error) error {
 
     for checksumAlgo := range hashes {
         checksumPath := xattrRoot + checksumAlgo
-        checksumValue, _ := GetxattrHex(path, checksumPath)
+        checksumValue, _ := GetxattrString(path, checksumPath)
 
         // If the checksum is missing, just store it
         if len(checksumValue) == 0 {
-            SetxattrHex(path, checksumPath, hashes[checksumAlgo])
+            SetxattrString(path, checksumPath, hashes[checksumAlgo])
         } else {
             if hashes[checksumAlgo] != checksumValue {
                 if modTime > checksumMTime && updateOnNewMTime {
                     Warn.Printf("%v: Updating checksum due to updated mtime\n", path)
-                    SetxattrHex(path, checksumPath, hashes[checksumAlgo])
+                    SetxattrString(path, checksumPath, hashes[checksumAlgo])
                     SetxattrInt64(path, checksumMTimePath, modTime)
                 } else {
                     if modTime < checksumMTime && updateOnNewMTime {

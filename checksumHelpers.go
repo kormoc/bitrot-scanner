@@ -12,7 +12,7 @@ func checksumCount(path string) int {
 
     for checksumAlgo := range checksumLookupTable {
         checksumPath := xattrRoot + checksumAlgo
-        checksumValue, _ := GetxattrHex(path, checksumPath)
+        checksumValue, _ := GetxattrString(path, checksumPath)
         if len(checksumValue) > 0 {
             count += 1
         }

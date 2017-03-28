@@ -1,10 +1,8 @@
 package main
 
-import "encoding/binary"
-import "encoding/hex"
-import "errors"
 import "github.com/davecheney/xattr"
 import "runtime"
+import "strconv"
 import "strings"
 
 func fixNameForLinux(name string) string {
@@ -19,41 +17,34 @@ func fixNameForLinux(name string) string {
     return name
 }
 
-func GetxattrHex(path string, name string) (string, error) {
-    dataBytes, err := xattr.Getxattr(path, fixNameForLinux(name))
-    if err != nil {
-        return "", err
-    }
-    data := hex.EncodeToString(dataBytes)
-    Trace.Printf("%v: Get: %v: %v\n", path, name, data)
-    return data, nil
-}
-
-func SetxattrHex(path string, name string, data string) error {
-    dataBytes, err := hex.DecodeString(data)
-    if err != nil {
-        return err
-    }
-    Trace.Printf("%v: Set: %v: %v\n", path, name, dataBytes)
-    return xattr.Setxattr(path, fixNameForLinux(name), dataBytes)
-}
-
 func GetxattrInt64(path string, name string) (int64, error) {
-    dataBytes, err := xattr.Getxattr(path, fixNameForLinux(name))
+    dataStr, err := GetxattrString(path, name)
     if err != nil {
         return 0, err
     }
-    data, n := binary.Varint(dataBytes)
-    if n <= 0 {
-        return 0, errors.New("Binary conversion failed")
+    data, err := strconv.ParseInt(dataStr, 10, 64)
+    if err != nil {
+        return 0, err
     }
-    Trace.Printf("%v: Get: %v: %v\n", path, name, data)
     return data, nil
 }
 
 func SetxattrInt64(path string, name string, data int64) error {
-    dataBytes := make([]byte, 8)
-    binary.PutVarint(dataBytes, data)
+    return SetxattrString(path, name, strconv.FormatInt(data, 10))
+}
+
+func GetxattrString(path string, name string) (string, error) {
+    dataBytes, err := xattr.Getxattr(path, fixNameForLinux(name))
+    if err != nil {
+        return "", err
+    }
+    data := string(dataBytes)
+    Trace.Printf("%v: Get: %v: %v\n", path, name, data)
+    return data, nil
+}
+
+func SetxattrString(path string, name string, data string) error {
+    dataBytes := []byte(data)
     Trace.Printf("%v: Set: %v: %v\n", path, name, dataBytes)
 
     return xattr.Setxattr(path, fixNameForLinux(name), dataBytes)

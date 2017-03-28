@@ -47,11 +47,6 @@ func workerChecksum(path string, info os.FileInfo, err error) error {
         Warn.Printf("%v has a mtime after checksums were generated!\n", path)
     }
 
-    if info.Size() == 0 {
-        Info.Printf("%v: Empty file. Skipping...\n", path)
-        return nil
-    }
-
     // Get hashes
     hashes, err := checksumPath(path)
     if err != nil {

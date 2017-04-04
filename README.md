@@ -40,3 +40,12 @@ By default, we use `sha512`, however you can use multiple hashes (`md5,sha512`).
  * sha1
  * sha256
  * sha512
+
+# Developer information
+
+## Regenerate vendor after changes
+
+```
+rm -rvf Godeps vendor
+godep save ./...
+```

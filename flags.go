@@ -6,12 +6,13 @@ import "github.com/kormoc/ionice"
 var bufferSize int
 var checksums string
 var debug bool
+var enableProgressBar bool
 var ioniceClass int
 var ioniceClassdata int
 var lockfilePath string
+var logfilePath string
 var mtimeSettle int64
 var nice int
-var enableProgressBar bool
 var resetXattrs bool
 var skipCreate bool
 var skipValidation bool
@@ -36,6 +37,7 @@ func processFlags() {
     flag.IntVar(    &workerCount,       "workerCount",      1,                             "Maximum number of workers to use")
     flag.StringVar( &checksums,         "checksums",        "sha512",                      "Which checksum(s) algorithm to use. Comma delimited")
     flag.StringVar( &lockfilePath,      "lockfile",         "",                            "Path to use for a lockfile")
+    flag.StringVar( &logfilePath,       "logfilePath",      "",                            "Path to logfile")
     flag.StringVar( &xattrRoot,         "xattrRoot",        "user.checksum.",              "base xattr path for checksums")
 
     flag.Parse()

@@ -13,4 +13,4 @@ targets:
   ubuntu-16.04:
 
 after:
-  - find . -not -name bin -and -not -name bitrot_scanner -print
+  - rm -rvf Godeps vendor *.go *.yml .profile.d .release

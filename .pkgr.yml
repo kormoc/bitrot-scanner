@@ -13,4 +13,4 @@ targets:
   ubuntu-16.04:
 
 after:
-  - rm -rvf Godeps vendor *.go *.yml .profile.d
+  - rm -rvf Godeps vendor *.go .profile.d

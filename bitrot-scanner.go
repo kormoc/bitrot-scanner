@@ -65,7 +65,12 @@ func main() {
         workerFunc = workerChecksum
     }
 
-    jobs = make(chan job, workerCount)
+    var jobsQueueSize = workerCount
+    if workerCount < 100 {
+        jobsQueueSize = 100
+    }
+
+    jobs = make(chan job, jobsQueueSize)
 
     // start workers
     wg := &sync.WaitGroup{}

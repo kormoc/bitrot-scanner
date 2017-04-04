@@ -8,9 +8,13 @@ This program aims to make the silent corruption a little less silent for those i
 ## Packages
 
  * [CentOS / RHEL 6 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install#centos-6-bitrot-scanner)
+ * [CentOS / RHEL 7 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install?bid=12#centos-7-bitrot-scanner)
  * [Debian 7 Wheezy 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install#debian-7-bitrot-scanner)
- * [Ubuntu 14.04 Trusty 64bit](https://packager.io/gh/kormoc/bitrot_scanner/install#ubuntu-14-04-bitrot-scanner)
- * [Ubuntu 16.04 Xenial 64bit](https://packager.io/gh/kormoc/bitrot_scanner/install#ubuntu-16-04-bitrot-scanner)
+ * [Debian 8 Jessie 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install?bid=12#debian-8-bitrot-scanner)
+ * [SUSE Linux Enterprise Server 12 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install?bid=12#sles-12-bitrot-scanner)
+ * [Ubuntu 12.04 Precise 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install?bid=12#ubuntu-12-04-bitrot-scanner)
+ * [Ubuntu 14.04 Trusty 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install#ubuntu-14-04-bitrot-scanner)
+ * [Ubuntu 16.04 Xenial 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install#ubuntu-16-04-bitrot-scanner)
 
 ## From source
 

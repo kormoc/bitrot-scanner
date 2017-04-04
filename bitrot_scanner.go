@@ -1,10 +1,10 @@
 package main
 
 import "flag"
-import "github.com/buger/goterm"
 import "github.com/kormoc/ionice"
 import "github.com/nightlyone/lockfile"
 import "github.com/vbauerster/mpb"
+import "github.com/vbauerster/mpb/cwriter"
 import "os"
 import "path/filepath"
 import "sync"
@@ -50,7 +50,8 @@ func main() {
         if (debug || verbose) && workerCount > 1 {
             Warn.Println("-progressBar requires -workerCount=1 with -debug or -verbose, disabling -progressBar")
         } else {
-            progressBar = mpb.New().SetWidth(goterm.Width())
+            width, _, _ := cwriter.GetTermSize()
+            progressBar = mpb.New().SetWidth(width)
         }
 
     }

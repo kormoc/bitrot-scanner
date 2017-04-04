@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/kormoc/bitrot_scanner",
+	"ImportPath": "github.com/kormoc/bitrot-scanner",
 	"GoVersion": "go1.8",
 	"GodepVersion": "v79",
 	"Packages": [

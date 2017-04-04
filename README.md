@@ -1,4 +1,4 @@
-# bitrot_scanner
+# bitrot-scanner
 
 [Bitrot](https://arstechnica.com/information-technology/2014/01/bitrot-and-atomic-cows-inside-next-gen-filesystems/) is a huge issue if you care about your data.
 This program aims to make the silent corruption a little less silent for those irreplaceable memories.
@@ -7,28 +7,28 @@ This program aims to make the silent corruption a little less silent for those i
 
 ## Packages
 
- * [CentOS / RHEL 6 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install#centos-6-bitrot-scanner)
- * [CentOS / RHEL 7 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install?bid=12#centos-7-bitrot-scanner)
- * [Debian 7 Wheezy 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install#debian-7-bitrot-scanner)
- * [Debian 8 Jessie 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install?bid=12#debian-8-bitrot-scanner)
- * [SUSE Linux Enterprise Server 12 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install?bid=12#sles-12-bitrot-scanner)
- * [Ubuntu 12.04 Precise 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install?bid=12#ubuntu-12-04-bitrot-scanner)
- * [Ubuntu 14.04 Trusty 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install#ubuntu-14-04-bitrot-scanner)
- * [Ubuntu 16.04 Xenial 64 bit](https://packager.io/gh/kormoc/bitrot_scanner/install#ubuntu-16-04-bitrot-scanner)
+ * [CentOS / RHEL 6 64 bit](https://packager.io/gh/kormoc/bitrot-scanner/install#centos-6-bitrot-scanner)
+ * [CentOS / RHEL 7 64 bit](https://packager.io/gh/kormoc/bitrot-scanner/install?bid=12#centos-7-bitrot-scanner)
+ * [Debian 7 Wheezy 64 bit](https://packager.io/gh/kormoc/bitrot-scanner/install#debian-7-bitrot-scanner)
+ * [Debian 8 Jessie 64 bit](https://packager.io/gh/kormoc/bitrot-scanner/install?bid=12#debian-8-bitrot-scanner)
+ * [SUSE Linux Enterprise Server 12 64 bit](https://packager.io/gh/kormoc/bitrot-scanner/install?bid=12#sles-12-bitrot-scanner)
+ * [Ubuntu 12.04 Precise 64 bit](https://packager.io/gh/kormoc/bitrot-scanner/install?bid=12#ubuntu-12-04-bitrot-scanner)
+ * [Ubuntu 14.04 Trusty 64 bit](https://packager.io/gh/kormoc/bitrot-scanner/install#ubuntu-14-04-bitrot-scanner)
+ * [Ubuntu 16.04 Xenial 64 bit](https://packager.io/gh/kormoc/bitrot-scanner/install#ubuntu-16-04-bitrot-scanner)
 
 ## From source
 
-`go get github.com/kormoc/bitrot_scanner`
+`go get github.com/kormoc/bitrot-scanner`
 
 # Usage
 
-Generally the best way to handle this is to run `bitrot_scanner` via cron on a cadence that matches the importance of your data.
+Generally the best way to handle this is to run `bitrot-scanner` via cron on a cadence that matches the importance of your data.
 
 ## Simplistic Mode
 
 This mode will create checksums for any files missing them and validate any checksums that exist. Useful if you want to create checksums and validate on the same schedule.
 
-`bitrot_scanner -progressBar /path/to/directory/1 /path/to/directory/2 ...`
+`bitrot-scanner -progressBar /path/to/directory/1 /path/to/directory/2 ...`
 
 ## Advanced Mode
 
@@ -37,11 +37,11 @@ This allows a rapid creation of new checksums, but allows the validation to happ
 
 ### Create checksums for files missing them
 
-`bitrot_scanner -lockfile /var/run/bitrot_scanner.pid -skipValidation /path/to/directory/1 /path/to/directory/2 ...`
+`bitrot-scanner -lockfile /var/run/bitrot-scanner.pid -skipValidation /path/to/directory/1 /path/to/directory/2 ...`
 
 ### Validate
 
-`bitrot_scanner -lockfile /var/run/bitrot_scanner.pid -skipCreate /path/to/directory/1 /path/to/directory/2 ...`
+`bitrot-scanner -lockfile /var/run/bitrot-scanner.pid -skipCreate /path/to/directory/1 /path/to/directory/2 ...`
 
 # Hash Functions
 

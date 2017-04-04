@@ -29,10 +29,12 @@
 		},
 		{
 			"ImportPath": "github.com/vbauerster/mpb",
+			"Comment": "v2.0.3-3-gadfc7e7",
 			"Rev": "adfc7e712f430ee5b63870d1b8c2b928401973bf"
 		},
 		{
 			"ImportPath": "github.com/vbauerster/mpb/cwriter",
+			"Comment": "v2.0.3-3-gadfc7e7",
 			"Rev": "adfc7e712f430ee5b63870d1b8c2b928401973bf"
 		},
 		{

@@ -1,0 +1,8 @@
+language: go
+install:
+  - go get ./...
+go:
+  - 1.8
+  - 1.7
+  - 1.6
+  - tip

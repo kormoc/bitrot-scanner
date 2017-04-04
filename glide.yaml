@@ -1,8 +1,0 @@
-package: github.com/kormoc/bitrot_scanner
-import:
-- package: github.com/davecheney/xattr
-- package: github.com/kormoc/ionice
-- package: github.com/nightlyone/lockfile
-- package: github.com/vbauerster/mpb
-  version: issue7fix
-- package: github.com/buger/goterm

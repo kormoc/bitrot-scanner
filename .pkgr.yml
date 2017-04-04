@@ -1,0 +1,3 @@
+cli:   "bin/bitrot_scanner"
+group: "bitrot_scanner"
+user:  "bitrot_scanner"

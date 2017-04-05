@@ -1,6 +1,6 @@
 package main
 
-import "flag"
+import flag "github.com/ogier/pflag"
 import "github.com/kormoc/ionice"
 import "github.com/nightlyone/lockfile"
 import "github.com/vbauerster/mpb"

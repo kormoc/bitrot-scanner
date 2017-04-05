@@ -1,6 +1,6 @@
 package main
 
-import flag "github.com/ogier/pflag"
+import "fmt"
 import "github.com/kormoc/ionice"
 import "github.com/nightlyone/lockfile"
 import "github.com/vbauerster/mpb"
@@ -9,6 +9,9 @@ import "os"
 import "path/filepath"
 import "sync"
 import "syscall"
+import flag "github.com/ogier/pflag"
+
+var Version = "Unknown"
 
 var lock lockfile.Lockfile
 var progressBar *mpb.Progress
@@ -26,6 +29,11 @@ func main() {
 	processFlags()
 
 	setupLogs()
+
+    if version {
+        fmt.Printf("Version: %v\n", Version)
+        return
+    }
 
 	if lockfilePath != "" {
 		var err error

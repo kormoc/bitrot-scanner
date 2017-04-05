@@ -12,5 +12,9 @@ targets:
   ubuntu-14.04:
   ubuntu-16.04:
 
+before:
+  - export GO_LINKER_SYMBOL="main.Version"
+  - export GO_LINKER_VALUE=$(git describe --tags)
+
 after:
   - rm -rvf Godeps vendor *.go .profile.d Makefile

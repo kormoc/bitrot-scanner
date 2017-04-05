@@ -1,5 +1,6 @@
 package main
 
+import "fmt"
 import "io"
 import "io/ioutil"
 import "log"
@@ -16,13 +17,14 @@ var logLevels = map[string]int{
     "error":    1,
     "warn":     2,
     "warning":  2,
+    "info":     3,
     "verbose":  3,
     "debug":    4,
     "trace":    4,
 }
 
 func getLogLevelOutput(level string, currentLevel string, output io.Writer) io.Writer {
-    if logLevels[strings.ToLower(level)] <= logLevels[strings.ToLower(currentLevel)] {
+    if logLevels[strings.ToLower(level)] >= logLevels[strings.ToLower(currentLevel)] {
         return output
     }
     return ioutil.Discard
@@ -50,6 +52,6 @@ func setupLogs() {
 
     Error = log.New(getLogLevelOutputs("error", os.Stderr, fp), "ERROR: ", 0)
     Warn = log.New( getLogLevelOutputs("warn",  os.Stderr, fp), "WARN: ", 0)
-    Info = log.New( getLogLevelOutputs("info",  os.Stdout, fp), "INFO: ", 0)
+    Info = log.New( getLogLevelOutputs("verbose",  os.Stdout, fp), "INFO: ", 0)
     Trace = log.New(getLogLevelOutputs("debug", os.Stdout, fp), "DEBUG: ", 0)
 }

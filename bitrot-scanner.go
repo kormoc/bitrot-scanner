@@ -30,10 +30,10 @@ func main() {
 
 	setupLogs()
 
-    if version {
-        fmt.Printf("Version: %v\n", Version)
-        return
-    }
+	if version {
+		fmt.Printf("Version: %v\n", Version)
+		return
+	}
 
 	if lockfilePath != "" {
 		var err error

@@ -1,6 +1,5 @@
 package main
 
-import "fmt"
 import "io"
 import "io/ioutil"
 import "log"

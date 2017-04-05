@@ -13,8 +13,10 @@ targets:
   ubuntu-16.04:
 
 before:
-  - export GO_LINKER_SYMBOL="main.Version"
-  - export GO_LINKER_VALUE=$(git describe --tags)
+  - sed -i'' s/__GO_LINKER_VALUE__/$(git describe --tags)/ app.json
+  - export GO_LINKER_SYMBOL=main.Version
+  - export GO_LINKER_VALUE=.pkgr.yml
+  - env
 
 after:
   - rm -rvf Godeps vendor *.go .profile.d Makefile

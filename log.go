@@ -22,7 +22,7 @@ var logLevels = map[string]int{
 }
 
 func getLogLevelOutput(level string, currentLevel string, output io.Writer) io.Writer {
-    if logLevels[strings.ToLower(level)] >= logLevels[strings.ToLower(currentLevel)] {
+    if logLevels[strings.ToLower(level)] <= logLevels[strings.ToLower(currentLevel)] {
         return output
     }
     return ioutil.Discard

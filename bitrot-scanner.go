@@ -47,7 +47,7 @@ func main() {
     }
 
     if enableProgressBar {
-        if (debug || verbose) && workerCount > 1 {
+        if workerCount > 1 {
             Warn.Println("-progressBar requires -workerCount=1 with -debug or -verbose, disabling -progressBar")
         } else {
             width, _, _ := cwriter.GetTermSize()

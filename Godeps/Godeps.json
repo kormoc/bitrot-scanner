@@ -24,6 +24,11 @@
 			"Rev": "1d49c987357a327b5b03aa84cbddd582c328615d"
 		},
 		{
+			"ImportPath": "github.com/ogier/pflag",
+			"Comment": "v0.0.1-7-g45c278a",
+			"Rev": "45c278ab3607870051a2ea9040bb85fcb8557481"
+		},
+		{
 			"ImportPath": "github.com/vbauerster/mpb",
 			"Comment": "v2.0.3-3-gadfc7e7",
 			"Rev": "adfc7e712f430ee5b63870d1b8c2b928401973bf"

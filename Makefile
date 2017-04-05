@@ -1,7 +1,6 @@
 
 all:
-	@echo "make deps 			- Refresh current godeps"
-	@echo "make version VERSION=v0.0.0 	- Create a new release"
+	go build
 
 deps:
 	rm -rvf Godeps vendor

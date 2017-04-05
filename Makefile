@@ -12,4 +12,3 @@ version:
 	git push
 
 .PHONY: deps version
-

@@ -1,4 +1,0 @@
-{
-    "GO_LINKER_SYMBOL": "main.Version",
-    "GO_LINKER_VALUE": "__GO_LINKER_VALUE__",
-}

@@ -11,7 +11,6 @@ import "sync"
 import "syscall"
 import flag "github.com/ogier/pflag"
 
-var Version = "Unknown"
 
 var lock lockfile.Lockfile
 var progressBar *mpb.Progress

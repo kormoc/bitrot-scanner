@@ -28,7 +28,7 @@ Generally the best way to handle this is to run `bitrot-scanner` via cron on a c
 
 This mode will create checksums for any files missing them and validate any checksums that exist. Useful if you want to create checksums and validate on the same schedule.
 
-`bitrot-scanner -progressBar /path/to/directory/1 /path/to/directory/2 ...`
+`bitrot-scanner --progressBar /path/to/directory/1 /path/to/directory/2 ...`
 
 ## Advanced Mode
 
@@ -37,11 +37,11 @@ This allows a rapid creation of new checksums, but allows the validation to happ
 
 ### Create checksums for files missing them
 
-`bitrot-scanner -lockfile /var/run/bitrot-scanner.pid -skipValidation /path/to/directory/1 /path/to/directory/2 ...`
+`bitrot-scanner --lockfile=/var/run/bitrot-scanner.pid --skipValidation /path/to/directory/1 /path/to/directory/2 ...`
 
 ### Validate
 
-`bitrot-scanner -lockfile /var/run/bitrot-scanner.pid -skipCreate /path/to/directory/1 /path/to/directory/2 ...`
+`bitrot-scanner --lockfile=/var/run/bitrot-scanner.pid --skipCreate /path/to/directory/1 /path/to/directory/2 ...`
 
 # Hash Functions
 

@@ -1,7 +1,5 @@
-VERSION :=$(shell git describe --tags )
-
 all:
-	go build -ldflags "-X main.Version=$(VERSION)"
+	go build -ldflags "-X main.Version=$(shell git describe --tags)"
 
 deps:
 	rm -rvf Godeps vendor

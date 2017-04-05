@@ -1,6 +1,6 @@
 cli:   "bitrot-scanner"
-group: "bitrot-scanner"
-user:  "bitrot-scanner"
+group: "root"
+user:  "root"
 
 targets:
   centos-6:

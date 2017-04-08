@@ -38,10 +38,6 @@ func workerChecksum(path string, info os.FileInfo, err error) error {
 
 	checksumMTime, _ := GetxattrInt64(path, checksumMTimePath)
 
-	if checksumMTime == 0 {
-		SetxattrInt64(path, checksumMTimePath, modTime)
-	}
-
 	// Validate that the file hasn't received a new mtime
 	if checksumMTime != 0 && modTime > checksumMTime {
 		Warn.Printf("%v has a mtime after checksums were generated!\n", path)
@@ -59,6 +55,7 @@ func workerChecksum(path string, info os.FileInfo, err error) error {
 
 		// If the checksum is missing, just store it
 		if len(checksumValue) == 0 {
+			SetxattrInt64(path, checksumMTimePath, modTime)
 			SetxattrString(path, checksumPath, hashes[checksumAlgo])
 		} else {
 			if hashes[checksumAlgo] != checksumValue {

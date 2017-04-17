@@ -9,6 +9,7 @@ import "os"
 import "path/filepath"
 import "sync"
 import "syscall"
+import "time"
 import flag "github.com/ogier/pflag"
 
 var lock lockfile.Lockfile
@@ -78,6 +79,8 @@ func main() {
 
 	jobs = make(chan job, jobsQueueSize)
 
+    time_start := time.Now()
+
 	// start workers
 	wg := &sync.WaitGroup{}
 	for i := 1; i <= workerCount; i++ {
@@ -108,6 +111,10 @@ func main() {
 	}
 	close(jobs)
 	wg.Wait()
+
+    time_duration := time.Since(time_start)
+
+    Info.Printf("Ran in %v", time_duration)
 
 	if progressBar != nil {
 		progressBar.Stop()

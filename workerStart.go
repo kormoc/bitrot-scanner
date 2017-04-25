@@ -7,7 +7,8 @@ var workerStartJobs chan job
 var workerStartJobswg sync.WaitGroup
 
 func initWorkerStart() {
-    workerStartJobs = make(chan job, workerCount)
+    workerStartJobs = make(chan job, workerCount*2)
+    workerStartJobswg.Add(workerCount)
     for i := 0; i < workerCount; i++ {
         go workerStart()
     }
@@ -18,7 +19,6 @@ func initWorkerStart() {
 }
 
 func workerStart() {
-    workerStartJobswg.Add(1)
     defer workerStartJobswg.Done()
     for currentJob := range workerStartJobs {
         err := func() error {
@@ -32,17 +32,17 @@ func workerStart() {
 
             // Skip files if they've been modified too recently
             if currentJob.mtime > (time.Now().Unix() - mtimeSettle) {
-                Info.Printf("%v: Has been modified too recently. Skipping due to -mtimeSettle\n", currentJob.path)
+                Info.Printf("%v: Has been modified too recently. Skipping due to --mtimeSettle\n", currentJob.path)
                 return nil
             }
 
             if skipValidation && !currentJob.missingChecksums() {
-                Info.Printf("%v: Already has all checksums. Skipping due to -skipValidation\n", currentJob.path)
+                Info.Printf("%v: Already has all checksums. Skipping due to --skipValidation\n", currentJob.path)
                 return nil
             }
 
             if skipCreate && currentJob.checksumCount == 0 {
-                Info.Printf("%v: Missing all checksums. Skipping due to -skipCreate\n", currentJob.path)
+                Info.Printf("%v: Missing all checksums. Skipping due to --skipCreate\n", currentJob.path)
                 return nil
             }
 

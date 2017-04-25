@@ -7,14 +7,14 @@ var workerResetJobs chan job
 var workerResetJobswg sync.WaitGroup
 
 func initWorkerReset() {
-    workerResetJobs = make(chan job, workerCount)
+    workerResetJobs = make(chan job, workerCount*2)
+    workerResetJobswg.Add(workerCount)
     for i := 0; i < workerCount; i++ {
         go workerReset()
     }
 }
 
 func workerReset() {
-    workerResetJobswg.Add(1)
     defer workerResetJobswg.Done()
     for currentJob := range workerResetJobs {
         time_start := time.Now()

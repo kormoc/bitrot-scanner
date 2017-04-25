@@ -8,14 +8,14 @@ var workerEndJobs chan job
 var workerEndJobswg sync.WaitGroup
 
 func initWorkerEnd() {
-    workerEndJobs = make(chan job, workerCount)
+    workerEndJobs = make(chan job, workerCount*2)
+    workerEndJobswg.Add(workerCount)
     for i := 0; i < workerCount; i++ {
         go workerEnd()
     }
 }
 
 func workerEnd() {
-    workerEndJobswg.Add(1)
     defer workerEndJobswg.Done()
     for currentJob := range workerEndJobs {
         err := func() error {

@@ -50,7 +50,7 @@ func setupLogs() {
 	}
 
 	Error = log.New(getLogLevelOutputs("error", os.Stderr, fp), "ERROR: ", 0)
-	Warn = log.New(getLogLevelOutputs("warn", os.Stderr, fp), "WARN: ", 0)
-	Info = log.New(getLogLevelOutputs("verbose", os.Stdout, fp), "INFO: ", 0)
+	Warn = log.New(getLogLevelOutputs("warn", os.Stderr, fp), "WARN : ", 0)
+	Info = log.New(getLogLevelOutputs("verbose", os.Stdout, fp), "INFO : ", 0)
 	Trace = log.New(getLogLevelOutputs("debug", os.Stdout, fp), "DEBUG: ", 0)
 }

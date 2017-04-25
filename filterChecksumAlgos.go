@@ -23,14 +23,25 @@ var checksumLookupTable = map[string]crypto.Hash{
 	"sha512sum": crypto.SHA512,
 }
 
+var allChecksumAlgos []string
+
 var checksumAlgos = map[string]crypto.Hash{}
+
+func init() {
+    allChecksumAlgos = make([]string, len(checksumLookupTable))
+    i := 0
+    for k := range checksumLookupTable {
+        allChecksumAlgos[i] = k
+        i++
+    }
+}
 
 func filterChecksumAlgos() {
 	i := strings.Split(checksums, ",")
 	var j = map[string]crypto.Hash{}
 	for _, checksum := range i {
 		if checksumLookupTable[checksum].Available() == false {
-			Error.Fatalln("Unsupported checksum algorithm: " + checksum)
+			Error.Fatalf("Unsupported checksum algorithm: %v\n", checksum)
 		}
 		j[checksum] = checksumLookupTable[checksum]
 	}

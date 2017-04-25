@@ -64,3 +64,54 @@ func Hasxattr(path string, name string) bool {
 	}
 	return false
 }
+
+
+// bitrot-scanner specific helpers
+
+func GetMTimeXattr(path string) int64 {
+    mtime, err := GetxattrInt64(path, xattrRoot+"mtime")
+    if err != nil {
+        if !strings.HasSuffix(err.Error(), "attribute not found") && !strings.HasSuffix(err.Error(), "errno 0"){
+            Error.Fatalf("%v: MTime Error: %v\n", path, err)
+        }
+    }
+    return mtime
+}
+
+func SetMTimeXattr(path string, value int64) {
+    err := SetxattrInt64(path, xattrRoot+"mtime", value)
+    if err != nil {
+        if !strings.HasSuffix(err.Error(), "errno 0"){
+            Error.Fatalf("%v: MTime Error: %v\n", path, err)
+        }
+    }
+}
+
+func GetChecksumXattr(path string, checksum string) string {
+    data, err := GetxattrString(path, xattrRoot+checksum)
+    if err != nil {
+        if strings.HasSuffix(err.Error(), "attribute not found"){
+            return ""
+        }
+        if !strings.HasSuffix(err.Error(), "errno 0") {
+            Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
+        }
+    }
+    return data
+}
+
+func SetChecksumXattr(path string, checksum string, value string) {
+    err := SetxattrString(path, xattrRoot+checksum, value)
+    if err != nil {
+        if !strings.HasSuffix(err.Error(), "errno 0"){
+            Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
+        }
+    }
+}
+
+func RemoveChecksumXattr(path string, checksum string) {
+    err := Removexattr(path, xattrRoot+checksum)
+    if err != nil {
+        Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
+    }
+}

@@ -1,24 +1,43 @@
 package main
 
-import "os"
+import "sync"
+import "time"
 
-func workerReset(path string, info os.FileInfo, err error) error {
-	if err != nil {
-		return err
-	}
+var workerResetJobs chan job
+var workerResetJobswg sync.WaitGroup
 
-	for checksumAlgo := range checksumLookupTable {
-		checksumPath := xattrRoot + checksumAlgo
+func initWorkerReset() {
+    workerResetJobs = make(chan job, workerCount)
+    for i := 0; i < workerCount; i++ {
+        go workerReset()
+    }
+}
 
-		if err := Removexattr(path, checksumPath); err != nil {
-			return err
-		}
-	}
+func workerReset() {
+    workerResetJobswg.Add(1)
+    defer workerResetJobswg.Done()
+    for currentJob := range workerResetJobs {
+        time_start := time.Now()
+        Trace.Printf("%v: Reset Processing...\n", currentJob.path)
 
-	// Also clean up mtimes
-	if err := Removexattr(path, xattrRoot+"mtime"); err != nil {
-		return err
-	}
+        err := func() error {
+            for _, checksumAlgo := range allChecksumAlgos {
+                RemoveChecksumXattr(currentJob.path, checksumAlgo)
+            }
 
-	return nil
+            // Also clean up mtimes
+            RemoveChecksumXattr(currentJob.path, "mtime")
+
+            return nil
+        }()
+
+        if err != nil {
+            Error.Printf("%v: Reset Processing: %v\n", currentJob.path, err)
+        }
+
+        duration := time.Since(time_start)
+        currentJob.duration += duration
+        Trace.Printf("%v: Reset Processing took %v\n", currentJob.path, duration)
+        Info.Printf("%v: Processing took %v\n", currentJob.path, currentJob.duration)
+    }
 }

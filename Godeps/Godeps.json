@@ -4,12 +4,16 @@
 	"GodepVersion": "v79",
 	"Deps": [
 		{
-			"ImportPath": "github.com/davecheney/xattr",
-			"Rev": "dc6dbbe49f0b0bfcc98dedef66662d93462a720c"
-		},
-		{
 			"ImportPath": "github.com/kormoc/ionice",
 			"Rev": "aef1c6cc469279ebd5348695a7aad604bbacdf14"
+		},
+		{
+			"ImportPath": "github.com/kormoc/xattr",
+			"Rev": "14e9f0b2e28a1253642c94fc8019f63d19f6a8dd"
+		},
+		{
+			"ImportPath": "github.com/kormoc/xattr/xattrsyscall",
+			"Rev": "14e9f0b2e28a1253642c94fc8019f63d19f6a8dd"
 		},
 		{
 			"ImportPath": "github.com/nightlyone/lockfile",

@@ -1,5 +1,6 @@
 package main
 
+import "github.com/kormoc/unit/datarate"
 import "io"
 import "os"
 import "sync"
@@ -35,9 +36,11 @@ func workerIO() {
             defer fp.Close()
 
             buffer := make([]byte, bufferSize)
+            totalRead := 0
 
             for {
                 amountRead, err := fp.Read(buffer)
+                totalRead += amountRead
                 if err == io.EOF {
                     break
                 }
@@ -52,7 +55,8 @@ func workerIO() {
 
             duration := time.Since(time_start)
             currentJob.duration += duration
-            Trace.Printf("%v: IO Processing took %v\n", currentJob.path, duration)
+            ioRate := datarate.NewDatarateSIBytes(datarate.Datarate(totalRead) * datarate.Byte, duration)
+            Trace.Printf("%v: IO Processing took %v at %v\n", currentJob.path, duration, ioRate)
             workerEndJobs <- currentJob
             return nil
         }()

@@ -8,6 +8,18 @@
 			"Rev": "aef1c6cc469279ebd5348695a7aad604bbacdf14"
 		},
 		{
+			"ImportPath": "github.com/kormoc/unit",
+			"Rev": "ed2ed09eca71c837a18f844dac93d700c008bb34"
+		},
+		{
+			"ImportPath": "github.com/kormoc/unit/datarate",
+			"Rev": "ed2ed09eca71c837a18f844dac93d700c008bb34"
+		},
+		{
+			"ImportPath": "github.com/kormoc/unit/datasize",
+			"Rev": "ed2ed09eca71c837a18f844dac93d700c008bb34"
+		},
+		{
 			"ImportPath": "github.com/kormoc/xattr",
 			"Rev": "50cd3fe62d33758757832edc287fd00dda62ea42"
 		},

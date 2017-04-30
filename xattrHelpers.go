@@ -1,68 +1,34 @@
 package main
 
-import "github.com/davecheney/xattr"
-import "runtime"
-import "strconv"
-import "strings"
+import "github.com/kormoc/xattr"
 
-func fixNameForLinux(name string) string {
-	// Due to our xattr lib, all attributes on linux are prepended with "user." already
-	// so strip this off for our ends if we're on linux
-
-	var userPrefix = "user."
-
-	if runtime.GOOS == "linux" && strings.HasPrefix(name, userPrefix) {
-		return name[len(userPrefix):]
-	}
-	return name
-}
 
 func GetxattrInt64(path string, name string) (int64, error) {
-	dataStr, err := GetxattrString(path, name)
-	if err != nil {
-		return 0, err
-	}
-	data, err := strconv.ParseInt(dataStr, 10, 64)
-	if err != nil {
-		return 0, err
-	}
-	return data, nil
+    return xattr.GetStringInt64(path, name)
 }
 
 func SetxattrInt64(path string, name string, data int64) error {
-	return SetxattrString(path, name, strconv.FormatInt(data, 10))
+	return xattr.SetStringInt64(path, name, data)
 }
 
 func GetxattrString(path string, name string) (string, error) {
-	dataBytes, err := xattr.Getxattr(path, fixNameForLinux(name))
-	if err != nil {
-		return "", err
-	}
-	data := string(dataBytes)
-	Trace.Printf("%v: Get: %v: %v\n", path, name, data)
-	return data, nil
+    return xattr.GetString(path, name)
 }
 
 func SetxattrString(path string, name string, data string) error {
-	Trace.Printf("%v: Set: %v: %v\n", path, name, data)
-
-	return xattr.Setxattr(path, fixNameForLinux(name), []byte(data))
+    return xattr.SetString(path, name, data)
 }
 
 func Removexattr(path string, name string) error {
-	if !Hasxattr(path, name) {
-		return nil
-	}
+    has, err := xattr.Has(path, name)
+    if !has {
+        return nil
+    }
+    if err != nil {
+        return err
+    }
 	Info.Printf("%v: Removing: %v", path, name)
-	return xattr.Removexattr(path, fixNameForLinux(name))
-}
-
-func Hasxattr(path string, name string) bool {
-	data, _ := xattr.Getxattr(path, fixNameForLinux(name))
-	if len(data) != 0 {
-		return true
-	}
-	return false
+	return xattr.Remove(path, name)
 }
 
 
@@ -70,42 +36,31 @@ func Hasxattr(path string, name string) bool {
 
 func GetMTimeXattr(path string) int64 {
     mtime, err := GetxattrInt64(path, xattrRoot+"mtime")
-    if err != nil {
-        if !strings.HasSuffix(err.Error(), "attribute not found") && !strings.HasSuffix(err.Error(), "errno 0"){
-            Error.Fatalf("%v: MTime Error: %v\n", path, err)
-        }
+    if xattr.XAttrErrorIsFatal(err) {
+        Error.Fatalf("%v: MTime Error: %v\n", path, err)
     }
     return mtime
 }
 
 func SetMTimeXattr(path string, value int64) {
     err := SetxattrInt64(path, xattrRoot+"mtime", value)
-    if err != nil {
-        if !strings.HasSuffix(err.Error(), "errno 0"){
-            Error.Fatalf("%v: MTime Error: %v\n", path, err)
-        }
+    if xattr.XAttrErrorIsFatal(err) {
+        Error.Fatalf("%v: MTime Error: %v\n", path, err)
     }
 }
 
 func GetChecksumXattr(path string, checksum string) string {
     data, err := GetxattrString(path, xattrRoot+checksum)
-    if err != nil {
-        if strings.HasSuffix(err.Error(), "attribute not found"){
-            return ""
-        }
-        if !strings.HasSuffix(err.Error(), "errno 0") {
-            Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
-        }
+    if xattr.XAttrErrorIsFatal(err) {
+        Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
     }
     return data
 }
 
 func SetChecksumXattr(path string, checksum string, value string) {
     err := SetxattrString(path, xattrRoot+checksum, value)
-    if err != nil {
-        if !strings.HasSuffix(err.Error(), "errno 0"){
-            Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
-        }
+    if xattr.XAttrErrorIsFatal(err) {
+        Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
     }
 }
 

@@ -1,5 +1,6 @@
 package main
 
+import "github.com/kormoc/unit/datarate"
 import "hash"
 import "os"
 import "time"
@@ -8,6 +9,7 @@ type job struct {
     checksumCount int
     checksumMTime int64
     duration time.Duration
+    dataRate datarate.DatarateSIByte
     hashers map[string]hash.Hash
     info os.FileInfo
     mtime int64

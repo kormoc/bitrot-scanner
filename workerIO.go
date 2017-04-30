@@ -55,8 +55,8 @@ func workerIO() {
 
             duration := time.Since(time_start)
             currentJob.duration += duration
-            ioRate := datarate.NewDatarateSIBytes(datarate.Datarate(totalRead) * datarate.Byte, duration)
-            Trace.Printf("%v: IO Processing took %v at %v\n", currentJob.path, duration, ioRate)
+            currentJob.dataRate = datarate.NewDatarateSIBytes(datarate.Datarate(totalRead) * datarate.Byte, duration)
+            Trace.Printf("%v: IO Processing took %v at %v\n", currentJob.path, duration, currentJob.dataRate)
             workerEndJobs <- currentJob
             return nil
         }()

@@ -17,5 +17,5 @@ func Removexattr(path string, attr string) (err error) {
 }
 
 func Setxattr(path string, attr string, data []byte) (err error) {
-    return Setxattr(path, attr, data, 0)
+    return syscall.Setxattr(path, attr, data, 0)
 }

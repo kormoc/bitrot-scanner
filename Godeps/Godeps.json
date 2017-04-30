@@ -9,11 +9,11 @@
 		},
 		{
 			"ImportPath": "github.com/kormoc/xattr",
-			"Rev": "14e9f0b2e28a1253642c94fc8019f63d19f6a8dd"
+			"Rev": "50cd3fe62d33758757832edc287fd00dda62ea42"
 		},
 		{
 			"ImportPath": "github.com/kormoc/xattr/xattrsyscall",
-			"Rev": "14e9f0b2e28a1253642c94fc8019f63d19f6a8dd"
+			"Rev": "50cd3fe62d33758757832edc287fd00dda62ea42"
 		},
 		{
 			"ImportPath": "github.com/nightlyone/lockfile",

@@ -44,9 +44,9 @@ func workerIO() {
 			totalRead := 0
 
 			for {
-				amountRead, err := io.ReadAtLeast(fp, buffer, 0)
+				amountRead, err := io.ReadAtLeast(fp, buffer, 1)
 				totalRead += amountRead
-				if err == io.EOF || amountRead == 0 {
+				if err == io.EOF {
 					break
 				}
 				if err != nil {

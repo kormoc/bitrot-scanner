@@ -50,7 +50,7 @@ func workerStart() {
 
 			// Validate that the file hasn't received a new mtime
 			if currentJob.checksumMTime != 0 && currentJob.mtime > currentJob.checksumMTime {
-				Warn.Printf("%v has a mtime after checksums were generated!\n", currentJob.path)
+				Warn.Printf("%v has a mtime after checksums were generated!\nUse --updateOnNewMTime to re-generate checksums\n", currentJob.path)
 			}
 
 			currentJob.initalizeChecksums()

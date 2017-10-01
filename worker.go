@@ -1,19 +1,19 @@
 package main
 
 func initWorkers() {
-    initWorkerReset()
+	initWorkerReset()
 
-    initWorkerStart()
-    initWorkerIO()
-    initWorkerEnd()
+	initWorkerStart()
+	initWorkerIO()
+	initWorkerEnd()
 }
 
 func shutdownWorkers() {
-    close(workerResetJobs)
-    workerResetJobswg.Wait()
+	close(workerResetJobs)
+	workerResetJobswg.Wait()
 
-    close(workerStartJobs)
-    workerStartJobswg.Wait()
-    workerIOJobswg.Wait()
-    workerEndJobswg.Wait()
+	close(workerStartJobs)
+	workerStartJobswg.Wait()
+	workerIOJobswg.Wait()
+	workerEndJobswg.Wait()
 }

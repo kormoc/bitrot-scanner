@@ -6,38 +6,38 @@ import "os"
 import "time"
 
 type job struct {
-    checksumCount int
-    checksumMTime int64
-    duration time.Duration
-    dataRate datarate.DatarateSIByte
-    hashers map[string]hash.Hash
-    info os.FileInfo
-    mtime int64
-    path string
+	checksumCount int
+	checksumMTime int64
+	duration      time.Duration
+	dataRate      datarate.DatarateSIByte
+	hashers       map[string]hash.Hash
+	info          os.FileInfo
+	mtime         int64
+	path          string
 }
 
 func newJob(path string, info os.FileInfo) job {
-    j := job{
-        checksumCount: checksumCount(path),
-        info: info,
-        mtime: info.ModTime().Unix(),
-        path: path,
-    }
+	j := job{
+		checksumCount: checksumCount(path),
+		info:          info,
+		mtime:         info.ModTime().Unix(),
+		path:          path,
+	}
 
-    Trace.Printf("%v: Created job - mtime: %v\n", j.path, j.mtime)
+	Trace.Printf("%v: Created job - mtime: %v\n", j.path, j.mtime)
 
-    j.initalizeChecksums()
-    return j
+	j.initalizeChecksums()
+	return j
 }
 
 func (j *job) initalizeChecksums() {
-    j.hashers = make(map[string]hash.Hash)
+	j.hashers = make(map[string]hash.Hash)
 
-    for checksumAlgo := range checksumLookupTable {
-        j.hashers[checksumAlgo] = checksumLookupTable[checksumAlgo].New()
-    }
+	for checksumAlgo := range checksumLookupTable {
+		j.hashers[checksumAlgo] = checksumLookupTable[checksumAlgo].New()
+	}
 }
 
 func (j job) missingChecksums() bool {
-    return j.checksumCount != len(checksumLookupTable)
+	return j.checksumCount != len(checksumLookupTable)
 }

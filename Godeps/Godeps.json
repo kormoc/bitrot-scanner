@@ -1,7 +1,10 @@
 {
 	"ImportPath": "github.com/kormoc/bitrot-scanner",
-	"GoVersion": "go1.8",
+	"GoVersion": "go1.9",
 	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/kormoc/ionice",
@@ -26,6 +29,10 @@
 		{
 			"ImportPath": "github.com/kormoc/xattr/xattrsyscall",
 			"Rev": "50cd3fe62d33758757832edc287fd00dda62ea42"
+		},
+		{
+			"ImportPath": "github.com/ncw/directio",
+			"Rev": "17018d97cb6f2cd62f84c69903d327e596b7a93e"
 		},
 		{
 			"ImportPath": "github.com/nightlyone/lockfile",

@@ -28,12 +28,12 @@ var allChecksumAlgos []string
 var checksumAlgos = map[string]crypto.Hash{}
 
 func init() {
-    allChecksumAlgos = make([]string, len(checksumLookupTable))
-    i := 0
-    for k := range checksumLookupTable {
-        allChecksumAlgos[i] = k
-        i++
-    }
+	allChecksumAlgos = make([]string, len(checksumLookupTable))
+	i := 0
+	for k := range checksumLookupTable {
+		allChecksumAlgos[i] = k
+		i++
+	}
 }
 
 func filterChecksumAlgos() {

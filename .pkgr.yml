@@ -3,12 +3,14 @@ group: "root"
 user:  "root"
 
 targets:
-  centos-6: &el
+  centos-6:
     build_dependencies:
       # required for go buildpack
       - perl-Digest-SHA
   centos-7:
-    <<: *el
+    build_dependencies:
+      # required for go buildpack
+      - perl-Digest-SHA
   debian-7:
   debian-8:
   sles-11:
@@ -19,6 +21,7 @@ targets:
 
 before:
   - sed -i'' s/__BITROT_SCANNER_VERSION__/$(git describe --tags)/ version.go
+  - cat /home/pkgr/.gitconfig
 
 after:
   - rm -rvf Godeps vendor *.go .profile.d Makefile

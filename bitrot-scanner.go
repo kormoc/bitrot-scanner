@@ -3,6 +3,7 @@ package main
 import "github.com/nightlyone/lockfile"
 import "os"
 import "path/filepath"
+import "sort"
 import "time"
 import flag "github.com/ogier/pflag"
 
@@ -25,14 +26,18 @@ func main() {
 		defer lock.Unlock()
 	}
 
+	startTime := time.Now().Unix()
+	endTime := startTime + maxRunTime
+
 	initWorkers()
 
 	if !resetXattrs {
 		filterChecksumAlgos()
 	}
 
-	// Loop over the passed in directories and hash and/or validate
+	var allJobs []job
 
+	// Loop over the passed in directories and get all files
 	for _, path := range flag.Args() {
 		Info.Printf("Processing %v...\n", path)
 		if err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
@@ -41,17 +46,30 @@ func main() {
 			}
 
 			j := newJob(path, info)
-
-			if resetXattrs {
-				workerResetJobs <- j
-			} else {
-				workerStartJobs <- j
-			}
-
+			allJobs = append(allJobs, j)
 			return nil
-
 		}); err != nil {
 			Error.Println(err)
+		}
+	}
+
+	// Sort the slice so we check the oldest first
+	Info.Printf("Sorting paths...\n")
+	sort.Slice(allJobs, func(i, j int) bool { return allJobs[i].checkedTime < allJobs[j].checkedTime })
+
+	// Loop over the passed in directories and hash and/or validate
+	Info.Printf("Starting jobs...\n")
+	for _, j := range allJobs {
+		// Did we run out of time?
+		if time.Now().Unix() >= endTime && maxRunTime != 0 {
+			Info.Printf("Max Runtime Reached. Stopping queues...\n")
+			break
+		}
+
+		if resetXattrs {
+			workerResetJobs <- j
+		} else {
+			workerStartJobs <- j
 		}
 	}
 

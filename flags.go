@@ -12,6 +12,7 @@ var ioniceClassdata int
 var lockfilePath string
 var logfileLevel string
 var logfilePath string
+var maxRunTime int64
 var mtimeSettle int64
 var nice int
 var resetXattrs bool
@@ -29,6 +30,7 @@ func processFlags() {
 	flag.BoolVar(&skipValidation, "skipValidation", false, "Skip validating existing hashes. Useful to just generate for new files")
 	flag.BoolVar(&updateOnNewMTime, "updateOnNewMTime", false, "Update hashes if mtime is newer then last check time")
 	flag.BoolVar(&version, "version", false, "Display the version")
+	flag.Int64Var(&maxRunTime, "maxRunTime", 0, "Stop queueing new jobs after maxRunTime seconds. 0 to disable")
 	flag.Int64Var(&mtimeSettle, "mtimeSettle", 1800, "Don't create a hash until the mtime is at least this many seconds old")
 	flag.IntVar(&bufferSize, "bufferSize", 2048, "Read buffer size in blocks")
 	flag.IntVar(&ioniceClass, "ioniceClass", int(ionice.IOPRIO_CLASS_IDLE), "ionice class. 0: none, 1: realtime, 2: best-effort, 3: idle")

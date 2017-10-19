@@ -32,6 +32,21 @@ func Removexattr(path string, name string) error {
 
 // bitrot-scanner specific helpers
 
+func GetCheckedTimeXattr(path string) int64 {
+	mtime, err := GetxattrInt64(path, xattrRoot+"checkedtime")
+	if xattr.XAttrErrorIsFatal(err) {
+		Error.Fatalf("%v: CheckedTime Error: %v\n", path, err)
+	}
+	return mtime
+}
+
+func SetCheckedTimeXattr(path string, value int64) {
+	err := SetxattrInt64(path, xattrRoot+"checkedtime", value)
+	if xattr.XAttrErrorIsFatal(err) {
+		Error.Fatalf("%v: CheckedTime Error: %v\n", path, err)
+	}
+}
+
 func GetMTimeXattr(path string) int64 {
 	mtime, err := GetxattrInt64(path, xattrRoot+"mtime")
 	if xattr.XAttrErrorIsFatal(err) {

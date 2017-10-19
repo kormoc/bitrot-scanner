@@ -8,9 +8,10 @@ var workerEndJobs chan job
 var workerEndJobswg sync.WaitGroup
 
 func initWorkerEnd() {
-	workerEndJobs = make(chan job, workerCount*2)
-	workerEndJobswg.Add(workerCount)
-	for i := 0; i < workerCount; i++ {
+	workerCountEnd := workerCount
+	workerEndJobs = make(chan job, workerCountEnd)
+	workerEndJobswg.Add(workerCountEnd)
+	for i := 0; i < workerCountEnd; i++ {
 		go workerEnd()
 	}
 }
@@ -55,6 +56,8 @@ func workerEnd() {
 				// Sadness abounds!
 				Error.Printf("%v: CHECKSUM MISMATCH!\n\tComputed: %v\n\tExpected: %v\n", currentJob.path, currentHash, checksumValue)
 			}
+
+			SetCheckedTimeXattr(currentJob.path, time.Now().Unix())
 
 			duration := time.Since(time_start)
 			currentJob.duration += duration

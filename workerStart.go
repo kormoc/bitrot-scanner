@@ -7,9 +7,10 @@ var workerStartJobs chan job
 var workerStartJobswg sync.WaitGroup
 
 func initWorkerStart() {
-	workerStartJobs = make(chan job, workerCount*2)
-	workerStartJobswg.Add(workerCount)
-	for i := 0; i < workerCount; i++ {
+	workerCountStart := 1
+	workerStartJobs = make(chan job)
+	workerStartJobswg.Add(workerCountStart)
+	for i := 0; i < workerCountStart; i++ {
 		go workerStart()
 	}
 	go func() {

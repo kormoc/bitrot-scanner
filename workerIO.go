@@ -11,7 +11,7 @@ var workerIOJobs chan job
 var workerIOJobswg sync.WaitGroup
 
 func initWorkerIO() {
-	workerIOJobs = make(chan job, workerCountIO*2)
+	workerIOJobs = make(chan job, workerCountIO)
 	workerIOJobswg.Add(workerCountIO)
 	for i := 0; i < workerCountIO; i++ {
 		go workerIO()

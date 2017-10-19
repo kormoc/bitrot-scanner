@@ -21,7 +21,6 @@ targets:
 
 before:
   - sed -i'' s/__BITROT_SCANNER_VERSION__/$(git describe --tags)/ version.go
-  - cat /home/pkgr/.gitconfig
 
 after:
   - rm -rvf Godeps vendor *.go .profile.d Makefile

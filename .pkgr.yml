@@ -3,8 +3,12 @@ group: "root"
 user:  "root"
 
 targets:
-  centos-6:
+  centos-6: &el
+    build_dependencies:
+      # required for go buildpack
+      - perl-Digest-SHA
   centos-7:
+    <<: *el
   debian-7:
   debian-8:
   sles-12:

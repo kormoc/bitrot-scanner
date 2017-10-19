@@ -31,8 +31,8 @@ func getLogLevelOutput(level string, currentLevel string, output io.Writer) io.W
 
 func getLogLevelOutputs(currentLevel string, console io.Writer, logfile io.Writer) io.Writer {
 	return io.MultiWriter(
-		getLogLevelOutput(config.consoleLevel, currentLevel, console),
-		getLogLevelOutput(config.logfileLevel, currentLevel, logfile),
+		getLogLevelOutput(config.ConsoleLevel, currentLevel, console),
+		getLogLevelOutput(config.LogfileLevel, currentLevel, logfile),
 	)
 }
 
@@ -40,8 +40,8 @@ func setupLogs() {
 	// Log to file if defined
 	var fp io.Writer
 	var err error
-	if config.logfilePath != "" {
-		fp, err = os.OpenFile(config.logfilePath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	if config.LogfilePath != "" {
+		fp, err = os.OpenFile(config.LogfilePath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -7,7 +7,7 @@ var workerResetJobs chan job
 var workerResetJobswg sync.WaitGroup
 
 func initWorkerReset() {
-	workerCountReset := config.workerCount
+	workerCountReset := config.WorkerCount
 	workerResetJobs = make(chan job, workerCountReset)
 	workerResetJobswg.Add(workerCountReset)
 	for i := 0; i < workerCountReset; i++ {

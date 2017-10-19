@@ -33,7 +33,7 @@ func Removexattr(path string, name string) error {
 // bitrot-scanner specific helpers
 
 func GetCheckedTimeXattr(path string) int64 {
-	mtime, err := GetxattrInt64(path, config.xattrRoot+"checkedtime")
+	mtime, err := GetxattrInt64(path, config.XattrRoot+"checkedtime")
 	if xattr.XAttrErrorIsFatal(err) {
 		Error.Fatalf("%v: CheckedTime Error: %v\n", path, err)
 	}
@@ -41,14 +41,14 @@ func GetCheckedTimeXattr(path string) int64 {
 }
 
 func SetCheckedTimeXattr(path string, value int64) {
-	err := SetxattrInt64(path, config.xattrRoot+"checkedtime", value)
+	err := SetxattrInt64(path, config.XattrRoot+"checkedtime", value)
 	if xattr.XAttrErrorIsFatal(err) {
 		Error.Fatalf("%v: CheckedTime Error: %v\n", path, err)
 	}
 }
 
 func GetMTimeXattr(path string) int64 {
-	mtime, err := GetxattrInt64(path, config.xattrRoot+"mtime")
+	mtime, err := GetxattrInt64(path, config.XattrRoot+"mtime")
 	if xattr.XAttrErrorIsFatal(err) {
 		Error.Fatalf("%v: MTime Error: %v\n", path, err)
 	}
@@ -56,14 +56,14 @@ func GetMTimeXattr(path string) int64 {
 }
 
 func SetMTimeXattr(path string, value int64) {
-	err := SetxattrInt64(path, config.xattrRoot+"mtime", value)
+	err := SetxattrInt64(path, config.XattrRoot+"mtime", value)
 	if xattr.XAttrErrorIsFatal(err) {
 		Error.Fatalf("%v: MTime Error: %v\n", path, err)
 	}
 }
 
 func GetChecksumXattr(path string, checksum string) string {
-	data, err := GetxattrString(path, config.xattrRoot+checksum)
+	data, err := GetxattrString(path, config.XattrRoot+checksum)
 	if xattr.XAttrErrorIsFatal(err) {
 		Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
 	}
@@ -71,14 +71,14 @@ func GetChecksumXattr(path string, checksum string) string {
 }
 
 func SetChecksumXattr(path string, checksum string, value string) {
-	err := SetxattrString(path, config.xattrRoot+checksum, value)
+	err := SetxattrString(path, config.XattrRoot+checksum, value)
 	if xattr.XAttrErrorIsFatal(err) {
 		Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
 	}
 }
 
 func RemoveChecksumXattr(path string, checksum string) {
-	err := Removexattr(path, config.xattrRoot+checksum)
+	err := Removexattr(path, config.XattrRoot+checksum)
 	if err != nil {
 		Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
 	}

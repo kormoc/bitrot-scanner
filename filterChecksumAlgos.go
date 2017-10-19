@@ -37,7 +37,7 @@ func init() {
 }
 
 func filterChecksumAlgos() {
-	i := strings.Split(config.checksums, ",")
+	i := strings.Split(config.Checksums, ",")
 	var j = map[string]crypto.Hash{}
 	for _, checksum := range i {
 		if checksumLookupTable[checksum].Available() == false {

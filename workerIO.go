@@ -11,9 +11,9 @@ var workerIOJobs chan job
 var workerIOJobswg sync.WaitGroup
 
 func initWorkerIO() {
-	workerIOJobs = make(chan job, workerCountIO)
-	workerIOJobswg.Add(workerCountIO)
-	for i := 0; i < workerCountIO; i++ {
+	workerIOJobs = make(chan job, config.workerCountIO)
+	workerIOJobswg.Add(config.workerCountIO)
+	for i := 0; i < config.workerCountIO; i++ {
 		go workerIO()
 	}
 	go func() {
@@ -40,7 +40,7 @@ func workerIO() {
 
 			defer fp.Close()
 
-			buffer := directio.AlignedBlock(directio.BlockSize * bufferSize)
+			buffer := directio.AlignedBlock(directio.BlockSize * config.bufferSize)
 			totalRead := 0
 
 			for {

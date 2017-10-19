@@ -6,7 +6,7 @@ import "os"
 var Version = "__BITROT_SCANNER_VERSION__"
 
 func versionFlag() {
-	if version {
+	if config.version {
 		fmt.Printf("Version: %v\n", Version)
 		os.Exit(0)
 	}

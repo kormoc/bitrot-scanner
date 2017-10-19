@@ -32,17 +32,17 @@ func workerStart() {
 			}
 
 			// Skip files if they've been modified too recently
-			if currentJob.mtime > (time.Now().Unix() - mtimeSettle) {
+			if currentJob.mtime > (time.Now().Unix() - config.mtimeSettle) {
 				Info.Printf("%v: Has been modified too recently. Skipping due to --mtimeSettle\n", currentJob.path)
 				return nil
 			}
 
-			if skipValidation && !currentJob.missingChecksums() {
+			if config.skipValidation && !currentJob.missingChecksums() {
 				Info.Printf("%v: Already has all checksums. Skipping due to --skipValidation\n", currentJob.path)
 				return nil
 			}
 
-			if skipCreate && currentJob.checksumCount == 0 {
+			if config.skipCreate && currentJob.checksumCount == 0 {
 				Info.Printf("%v: Missing all checksums. Skipping due to --skipCreate\n", currentJob.path)
 				return nil
 			}

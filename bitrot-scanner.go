@@ -15,8 +15,8 @@ func main() {
 	versionFlag()
 	setNice()
 
-	if lockfilePath != "" {
-		lock, err := lockfile.New(lockfilePath)
+	if config.lockfilePath != "" {
+		lock, err := lockfile.New(config.lockfilePath)
 		if err != nil {
 			Error.Fatalf("Lockfile failed. reason: %v\n", err)
 		}
@@ -27,11 +27,11 @@ func main() {
 	}
 
 	startTime := time.Now().Unix()
-	endTime := startTime + maxRunTime
+	endTime := startTime + config.maxRunTime
 
 	initWorkers()
 
-	if !resetXattrs {
+	if !config.resetXattrs {
 		filterChecksumAlgos()
 	}
 
@@ -61,12 +61,12 @@ func main() {
 	Info.Printf("Starting jobs...\n")
 	for _, j := range allJobs {
 		// Did we run out of time?
-		if time.Now().Unix() >= endTime && maxRunTime != 0 {
+		if time.Now().Unix() >= endTime && config.maxRunTime != 0 {
 			Info.Printf("Max Runtime Reached. Stopping queues...\n")
 			break
 		}
 
-		if resetXattrs {
+		if config.resetXattrs {
 			workerResetJobs <- j
 		} else {
 			workerStartJobs <- j

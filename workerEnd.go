@@ -8,7 +8,7 @@ var workerEndJobs chan job
 var workerEndJobswg sync.WaitGroup
 
 func initWorkerEnd() {
-	workerCountEnd := workerCount
+	workerCountEnd := config.workerCount
 	workerEndJobs = make(chan job, workerCountEnd)
 	workerEndJobswg.Add(workerCountEnd)
 	for i := 0; i < workerCountEnd; i++ {
@@ -41,7 +41,7 @@ func workerEnd() {
 
 				// No match, but the mtime was updated and the user requested that we update
 				// if this happens
-				if currentJob.mtime > currentJob.checksumMTime && updateOnNewMTime {
+				if currentJob.mtime > currentJob.checksumMTime && config.updateOnNewMTime {
 					Warn.Printf("%v: Updating checksum due to updated mtime\n", currentJob.path)
 					SetMTimeXattr(currentJob.path, currentJob.mtime)
 					SetChecksumXattr(currentJob.path, checksumAlgo, currentHash)
@@ -49,7 +49,7 @@ func workerEnd() {
 				}
 
 				// If this goes backwards, we're kinda confused
-				if currentJob.mtime < currentJob.checksumMTime && updateOnNewMTime {
+				if currentJob.mtime < currentJob.checksumMTime && config.updateOnNewMTime {
 					Error.Printf("%v: Failed to update checksum due to mtime reversing\n", currentJob.path)
 				}
 

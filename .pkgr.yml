@@ -11,6 +11,7 @@ targets:
     <<: *el
   debian-7:
   debian-8:
+  sles-11:
   sles-12:
   ubuntu-12.04:
   ubuntu-14.04:
@@ -21,3 +22,5 @@ before:
 
 after:
   - rm -rvf Godeps vendor *.go .profile.d Makefile
+
+buildpack: https://github.com/kr/heroku-buildpack-go.git

@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var config struct {
+var config = struct {
 	BufferSize       int    `yaml:"bufferSize"`
 	Checksums        string `yaml:"checksums"`
 	ConsoleLevel     string `yaml:"consoleLevel"`
@@ -29,29 +29,26 @@ var config struct {
 	WorkerCount      int    `yaml:"workerCount"`
 	WorkerCountIO    int    `yaml:"workerCountIO"`
 	XattrRoot        string `yaml:"xattrRoot"`
-}
-
-// Set defaults for the config struct
-func init() {
-	config.BufferSize = 2048
-	config.Checksums = "sha512"
-	config.ConsoleLevel = "warn"
-	config.IoniceClass = int(ionice.IOPRIO_CLASS_IDLE)
-	config.IoniceClassdata = 0
-	config.LockfilePath = ""
-	config.LogfileLevel = "warn"
-	config.LogfilePath = ""
-	config.MaxRunTime = 0
-	config.MtimeSettle = 1800
-	config.Nice = 20
-	config.ResetXattrs = false
-	config.SkipCreate = false
-	config.SkipValidation = false
-	config.UpdateOnNewMTime = false
-	config.Version = false
-	config.WorkerCount = 0
-	config.WorkerCountIO = 1
-	config.XattrRoot = "user.checksum."
+}{
+	BufferSize:       2048,
+	Checksums:        "sha512",
+	ConsoleLevel:     "warn",
+	IoniceClass:      int(ionice.IOPRIO_CLASS_IDLE),
+	IoniceClassdata:  0,
+	LockfilePath:     "",
+	LogfileLevel:     "warn",
+	LogfilePath:      "",
+	MaxRunTime:       0,
+	MtimeSettle:      1800,
+	Nice:             20,
+	ResetXattrs:      false,
+	SkipCreate:       false,
+	SkipValidation:   false,
+	UpdateOnNewMTime: false,
+	Version:          false,
+	WorkerCount:      0,
+	WorkerCountIO:    1,
+	XattrRoot:        "user.checksum.",
 }
 
 func processFlags() (err error) {

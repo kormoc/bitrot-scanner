@@ -58,7 +58,13 @@ func main() {
 
 	// Sort the slice so we check the oldest first
 	Info.Printf("Sorting paths...\n")
-	sort.Slice(allJobs, func(i, j int) bool { return allJobs[i].checkedTime < allJobs[j].checkedTime })
+	sort.Slice(allJobs,
+		func(i, j int) bool {
+			if allJobs[i].checkedTime == allJobs[j].checkedTime {
+				return allJobs[i].path < allJobs[j].path
+			}
+			return allJobs[i].checkedTime < allJobs[j].checkedTime
+		})
 
 	// Loop over the passed in directories and hash and/or validate
 	Info.Printf("Starting jobs...\n")

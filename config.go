@@ -32,6 +32,29 @@ var config struct {
 	XattrRoot        string `yaml:"xattrRoot"`
 }
 
+// Set defaults for the config struct
+func init() {
+	config.BufferSize = 2048
+	config.Checksums = "sha512"
+	config.ConsoleLevel = "warn"
+	config.IoniceClass = int(ionice.IOPRIO_CLASS_IDLE)
+	config.IoniceClassdata = 0
+	config.LockfilePath = ""
+	config.LogfileLevel = "warn"
+	config.LogfilePath = ""
+	config.MaxRunTime = 0
+	config.MtimeSettle = 1800
+	config.Nice = 20
+	config.ResetXattrs = false
+	config.SkipCreate = false
+	config.SkipValidation = false
+	config.UpdateOnNewMTime = false
+	config.Version = false
+	config.WorkerCount = 0
+	config.WorkerCountIO = 1
+	config.XattrRoot = "user.checksum."
+}
+
 func processFlags() (err error) {
 	var configData []byte
 	configData, err = ioutil.ReadFile("/etc/bitrot-scanner.yaml")
@@ -42,27 +65,25 @@ func processFlags() (err error) {
 		}
 	}
 
-	fmt.Printf("\n%v\n", config)
-
-	flag.BoolVar(&config.ResetXattrs, "resetXattrs", false, "Don't checksum, just reset any potential checksums")
-	flag.BoolVar(&config.SkipCreate, "skipCreate", false, "Skip creating new hashes. Useful for just validating existing hashes")
-	flag.BoolVar(&config.SkipValidation, "skipValidation", false, "Skip validating existing hashes. Useful to just generate for new files")
-	flag.BoolVar(&config.UpdateOnNewMTime, "updateOnNewMTime", false, "Update hashes if mtime is newer then last check time")
-	flag.BoolVar(&config.Version, "version", false, "Display the version")
-	flag.Int64Var(&config.MaxRunTime, "maxRunTime", 0, "Stop queueing new jobs after maxRunTime seconds. 0 to disable")
-	flag.Int64Var(&config.MtimeSettle, "mtimeSettle", 1800, "Don't create a hash until the mtime is at least this many seconds old")
-	flag.IntVar(&config.BufferSize, "bufferSize", 2048, "Read buffer size in blocks")
-	flag.IntVar(&config.IoniceClass, "ioniceClass", int(ionice.IOPRIO_CLASS_IDLE), "ionice class. 0: none, 1: realtime, 2: best-effort, 3: idle")
-	flag.IntVar(&config.IoniceClassdata, "ioniceClassdata", 0, "ionice classdata. Only useful for realtime/best-effort")
-	flag.IntVar(&config.Nice, "nice", 20, "Nice value to use")
-	flag.IntVar(&config.WorkerCount, "workerCount", 0, "Maximum number of workers per stage to use for scanning for all other stages. 0 to detect and use the number of cpu cores")
-	flag.IntVar(&config.WorkerCountIO, "workerCountIO", 1, "Maximum number of workers to use for reading file data. 0 to detect and use the number of cpu cores")
-	flag.StringVar(&config.Checksums, "checksums", "sha512", "Which checksum(s) algorithm to use. Comma delimited")
-	flag.StringVar(&config.ConsoleLevel, "consoleLevel", "warn", "Log level for console output. error, warn, verbose, debug")
-	flag.StringVar(&config.LockfilePath, "lockfile", "", "Path to use for a lockfile")
-	flag.StringVar(&config.LogfileLevel, "logfileLevel", "warn", "Log level for log file. error, warn, verbose, debug")
-	flag.StringVar(&config.LogfilePath, "logfilePath", "", "Path to logfile")
-	flag.StringVar(&config.XattrRoot, "xattrRoot", "user.checksum.", "base xattr path for checksums")
+	flag.BoolVar(&config.ResetXattrs, "resetXattrs", config.ResetXattrs, "Don't checksum, just reset any potential checksums")
+	flag.BoolVar(&config.SkipCreate, "skipCreate", config.SkipCreate, "Skip creating new hashes. Useful for just validating existing hashes")
+	flag.BoolVar(&config.SkipValidation, "skipValidation", config.SkipValidation, "Skip validating existing hashes. Useful to just generate for new files")
+	flag.BoolVar(&config.UpdateOnNewMTime, "updateOnNewMTime", config.UpdateOnNewMTime, "Update hashes if mtime is newer then last check time")
+	flag.BoolVar(&config.Version, "version", config.Version, "Display the version")
+	flag.Int64Var(&config.MaxRunTime, "maxRunTime", config.MaxRunTime, "Stop queueing new jobs after maxRunTime seconds. 0 to disable")
+	flag.Int64Var(&config.MtimeSettle, "mtimeSettle", config.MtimeSettle, "Don't create a hash until the mtime is at least this many seconds old")
+	flag.IntVar(&config.BufferSize, "bufferSize", config.BufferSize, "Read buffer size in blocks")
+	flag.IntVar(&config.IoniceClass, "ioniceClass", config.IoniceClass, "ionice class. 0: none, 1: realtime, 2: best-effort, 3: idle")
+	flag.IntVar(&config.IoniceClassdata, "ioniceClassdata", config.IoniceClassdata, "ionice classdata. Only useful for realtime/best-effort")
+	flag.IntVar(&config.Nice, "nice", config.Nice, "Nice value to use")
+	flag.IntVar(&config.WorkerCount, "workerCount", config.WorkerCount, "Maximum number of workers per stage to use for scanning for all other stages. 0 to detect and use the number of cpu cores")
+	flag.IntVar(&config.WorkerCountIO, "workerCountIO", config.WorkerCountIO, "Maximum number of workers to use for reading file data. 0 to detect and use the number of cpu cores")
+	flag.StringVar(&config.Checksums, "checksums", config.Checksums, "Which checksum(s) algorithm to use. Comma delimited")
+	flag.StringVar(&config.ConsoleLevel, "consoleLevel", config.ConsoleLevel, "Log level for console output. error, warn, verbose, debug")
+	flag.StringVar(&config.LockfilePath, "lockfile", config.LockfilePath, "Path to use for a lockfile")
+	flag.StringVar(&config.LogfileLevel, "logfileLevel", config.LogfileLevel, "Log level for log file. error, warn, verbose, debug")
+	flag.StringVar(&config.LogfilePath, "logfilePath", config.LogfilePath, "Path to logfile")
+	flag.StringVar(&config.XattrRoot, "xattrRoot", config.XattrRoot, "base xattr path for checksums")
 
 	flag.Parse()
 

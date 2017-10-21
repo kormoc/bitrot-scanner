@@ -1,7 +1,9 @@
 package main
 
-import "crypto"
-import "strings"
+import (
+	"crypto"
+	"strings"
+)
 
 // Checksum algos
 import (

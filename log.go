@@ -1,10 +1,12 @@
 package main
 
-import "io"
-import "io/ioutil"
-import "log"
-import "os"
-import "strings"
+import (
+	"io"
+	"io/ioutil"
+	"log"
+	"os"
+	"strings"
+)
 
 var Error *log.Logger
 var Warn *log.Logger

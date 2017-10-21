@@ -1,8 +1,10 @@
 package main
 
-import "encoding/hex"
-import "sync"
-import "time"
+import (
+	"encoding/hex"
+	"sync"
+	"time"
+)
 
 var workerEndJobs chan job
 var workerEndJobswg sync.WaitGroup

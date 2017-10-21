@@ -1,11 +1,14 @@
 package main
 
-import "github.com/kormoc/unit/datarate"
-import "github.com/ncw/directio"
-import "io"
-import "os"
-import "sync"
-import "time"
+import (
+	"io"
+	"os"
+	"sync"
+	"time"
+
+	"github.com/kormoc/unit/datarate"
+	"github.com/ncw/directio"
+)
 
 var workerIOJobs chan job
 var workerIOJobswg sync.WaitGroup

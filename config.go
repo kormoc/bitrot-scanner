@@ -1,10 +1,14 @@
 package main
 
-import "github.com/kormoc/ionice"
-import "gopkg.in/yaml.v2"
-import "io/ioutil"
-import "runtime"
-import flag "github.com/ogier/pflag"
+import (
+	"fmt"
+	"io/ioutil"
+	"runtime"
+
+	"github.com/kormoc/ionice"
+	flag "github.com/ogier/pflag"
+	"gopkg.in/yaml.v2"
+)
 
 var config struct {
 	BufferSize       int    `yaml:"bufferSize"`
@@ -37,6 +41,8 @@ func processFlags() (err error) {
 			return
 		}
 	}
+
+	fmt.Printf("\n%v\n", config)
 
 	flag.BoolVar(&config.ResetXattrs, "resetXattrs", false, "Don't checksum, just reset any potential checksums")
 	flag.BoolVar(&config.SkipCreate, "skipCreate", false, "Skip creating new hashes. Useful for just validating existing hashes")

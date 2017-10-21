@@ -1,11 +1,14 @@
 package main
 
-import "github.com/nightlyone/lockfile"
-import "os"
-import "path/filepath"
-import "sort"
-import "time"
-import flag "github.com/ogier/pflag"
+import (
+	"os"
+	"path/filepath"
+	"sort"
+	"time"
+
+	"github.com/nightlyone/lockfile"
+	flag "github.com/ogier/pflag"
+)
 
 func main() {
 	time_start := time.Now()

@@ -1,6 +1,8 @@
 package main
 
-import "github.com/kormoc/xattr"
+import (
+	"github.com/kormoc/xattr"
+)
 
 func GetxattrInt64(path string, name string) (int64, error) {
 	return xattr.GetStringInt64(path, name)

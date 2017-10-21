@@ -1,8 +1,11 @@
 package main
 
-import "github.com/kormoc/ionice"
-import "os"
-import "syscall"
+import (
+	"os"
+	"syscall"
+
+	"github.com/kormoc/ionice"
+)
 
 func setNice() {
 	if err := syscall.Setpriority(syscall.PRIO_PROCESS, os.Getpid(), config.Nice); err != nil {

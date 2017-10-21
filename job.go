@@ -1,9 +1,12 @@
 package main
 
-import "github.com/kormoc/unit/datarate"
-import "hash"
-import "os"
-import "time"
+import (
+	"hash"
+	"os"
+	"time"
+
+	"github.com/kormoc/unit/datarate"
+)
 
 type job struct {
 	checkedTime   int64

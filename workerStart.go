@@ -1,7 +1,9 @@
 package main
 
-import "sync"
-import "time"
+import (
+	"sync"
+	"time"
+)
 
 var workerStartJobs chan job
 var workerStartJobswg sync.WaitGroup

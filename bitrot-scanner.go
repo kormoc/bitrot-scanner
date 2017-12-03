@@ -48,6 +48,10 @@ func main() {
 				return err
 			}
 
+			if info.Mode()&os.ModeSymlink != 0 {
+				return nil
+			}
+
 			j := newJob(path, info)
 			allJobs = append(allJobs, j)
 			return nil

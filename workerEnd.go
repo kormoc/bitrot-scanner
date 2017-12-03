@@ -63,8 +63,7 @@ func workerEnd() {
 
 			duration := time.Since(time_start)
 			currentJob.duration += duration
-			Trace.Printf("%v: End Processing took %v\n", currentJob.path, duration)
-			Info.Printf("%v: Finished in %v @ %v.\n", currentJob.path, currentJob.duration, currentJob.dataRate)
+			Trace.Printf("%v: Finished in %v @ %v.\n", currentJob.path, currentJob.duration, currentJob.dataRate)
 			return nil
 		}()
 

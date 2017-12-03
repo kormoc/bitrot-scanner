@@ -13,6 +13,10 @@ var Warn *log.Logger
 var Info *log.Logger
 var Trace *log.Logger
 
+const (
+	defaultLogPrefix = log.LstdFlags
+)
+
 var logLevels = map[string]int{
 	"err":     1,
 	"error":   1,
@@ -51,8 +55,8 @@ func setupLogs() {
 		fp = ioutil.Discard
 	}
 
-	Error = log.New(getLogLevelOutputs("error", os.Stderr, fp), "ERROR: ", 0)
-	Warn = log.New(getLogLevelOutputs("warn", os.Stderr, fp), "WARN : ", 0)
-	Info = log.New(getLogLevelOutputs("verbose", os.Stdout, fp), "INFO : ", 0)
-	Trace = log.New(getLogLevelOutputs("debug", os.Stdout, fp), "DEBUG: ", 0)
+	Error = log.New(getLogLevelOutputs("error", os.Stderr, fp), "ERROR: ", defaultLogPrefix)
+	Warn = log.New(getLogLevelOutputs("warn", os.Stderr, fp), "WARN : ", defaultLogPrefix)
+	Info = log.New(getLogLevelOutputs("verbose", os.Stdout, fp), "INFO : ", defaultLogPrefix)
+	Trace = log.New(getLogLevelOutputs("debug", os.Stdout, fp), "DEBUG: ", defaultLogPrefix)
 }

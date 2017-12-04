@@ -28,11 +28,6 @@ func workerStart() {
 			time_start := time.Now()
 			Trace.Printf("%v: Start Processing...\n", currentJob.path)
 
-			// Only process regular files
-			if !currentJob.info.Mode().IsRegular() {
-				return nil
-			}
-
 			// Skip files if they've been modified too recently
 			if currentJob.mtime > (time.Now().Unix() - config.MtimeSettle) {
 				Info.Printf("%v: Has been modified too recently. Skipping due to --mtimeSettle\n", currentJob.path)

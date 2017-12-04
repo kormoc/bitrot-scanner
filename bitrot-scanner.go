@@ -52,6 +52,11 @@ func main() {
 				return nil
 			}
 
+			// Only process regular files
+			if !info.Mode().IsRegular() {
+				return nil
+			}
+
 			j := newJob(path, info)
 			allJobs = append(allJobs, j)
 			return nil

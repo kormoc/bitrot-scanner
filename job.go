@@ -15,7 +15,6 @@ type job struct {
 	dataRate      datarate.DatarateSIByte
 	duration      time.Duration
 	hashers       map[string]hash.Hash
-	info          os.FileInfo
 	mtime         int64
 	path          string
 }
@@ -24,7 +23,6 @@ func newJob(path string, info os.FileInfo) job {
 	j := job{
 		checkedTime:   GetCheckedTimeXattr(path),
 		checksumCount: checksumCount(path),
-		info:          info,
 		mtime:         info.ModTime().Unix(),
 		path:          path,
 	}

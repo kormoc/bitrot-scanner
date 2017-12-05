@@ -64,24 +64,31 @@ func SetMTimeXattr(path string, value int64) {
 	}
 }
 
-func GetChecksumXattr(path string, checksum string) string {
-	data, err := GetxattrString(path, config.XattrRoot+checksum)
+func GetChecksumXattr(path string, checksum ChecksumType) string {
+	data, err := GetxattrString(path, config.XattrRoot+checksum.String())
 	if xattr.XAttrErrorIsFatal(err) {
-		Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
+		Error.Fatalf("%v: %v Error: %v\n", path, checksum.String(), err)
 	}
 	return data
 }
 
-func SetChecksumXattr(path string, checksum string, value string) {
-	err := SetxattrString(path, config.XattrRoot+checksum, value)
+func SetChecksumXattr(path string, checksum ChecksumType, value string) {
+	err := SetxattrString(path, config.XattrRoot+checksum.String(), value)
 	if xattr.XAttrErrorIsFatal(err) {
-		Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
+		Error.Fatalf("%v: %v Error: %v\n", path, checksum.String(), err)
 	}
 }
 
-func RemoveChecksumXattr(path string, checksum string) {
-	err := Removexattr(path, config.XattrRoot+checksum)
+func RemoveChecksumXattr(path string, checksum ChecksumType) {
+	err := Removexattr(path, config.XattrRoot+checksum.String())
 	if err != nil {
-		Error.Fatalf("%v: %v Error: %v\n", path, checksum, err)
+		Error.Fatalf("%v: %v Error: %v\n", path, checksum.String(), err)
+	}
+}
+
+func RemoveTimeXattr(path string, timeName string) {
+	err := Removexattr(path, config.XattrRoot+timeName)
+	if err != nil {
+		Error.Fatalf("%v: %v Error: %v\n", path, timeName, err)
 	}
 }

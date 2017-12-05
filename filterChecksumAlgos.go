@@ -14,23 +14,17 @@ import (
 )
 
 // Man, why don't people allow their table to be exported...
-var checksumLookupTable = map[string]crypto.Hash{
-	"md5":       crypto.MD5,
-	"md5sum":    crypto.MD5,
-	"sha1":      crypto.SHA1,
-	"sha1sum":   crypto.SHA1,
-	"sha256":    crypto.SHA256,
-	"sha256sum": crypto.SHA256,
-	"sha512":    crypto.SHA512,
-	"sha512sum": crypto.SHA512,
+var checksumLookupTable = map[ChecksumType]crypto.Hash{
+	MD5:    crypto.MD5,
+	SHA1:   crypto.SHA1,
+	SHA256: crypto.SHA256,
+	SHA512: crypto.SHA512,
 }
 
-var allChecksumAlgos []string
-
-var checksumAlgos = map[string]crypto.Hash{}
+var allChecksumAlgos []ChecksumType
 
 func init() {
-	allChecksumAlgos = make([]string, len(checksumLookupTable))
+	allChecksumAlgos = make([]ChecksumType, len(checksumLookupTable))
 	i := 0
 	for k := range checksumLookupTable {
 		allChecksumAlgos[i] = k
@@ -40,12 +34,55 @@ func init() {
 
 func filterChecksumAlgos() {
 	i := strings.Split(config.Checksums, ",")
-	var j = map[string]crypto.Hash{}
+	var j = map[ChecksumType]crypto.Hash{}
 	for _, checksum := range i {
-		if checksumLookupTable[checksum].Available() == false {
+		csumtype := StringToChecksumType(checksum)
+		if checksumLookupTable[csumtype].Available() == false {
 			Error.Fatalf("Unsupported checksum algorithm: %v\n", checksum)
 		}
-		j[checksum] = checksumLookupTable[checksum]
+		j[csumtype] = checksumLookupTable[csumtype]
 	}
 	checksumLookupTable = j
+}
+
+/*****************************************************************************/
+
+type ChecksumType uint8
+
+const (
+	Unknown ChecksumType = iota // 0
+	MD5                         // 1
+	SHA1                        // 2
+	SHA256                      // 3
+	SHA512                      // 4
+)
+
+func StringToChecksumType(algo string) ChecksumType {
+	switch strings.ToLower(algo) {
+	case "md5", "md5sum":
+		return MD5
+	case "sha1", "sha1sum":
+		return SHA1
+	case "sha256", "sha256sum":
+		return SHA256
+	case "sha512", "sha512sum":
+		return SHA512
+	default:
+		return Unknown
+	}
+}
+
+func (checksumType ChecksumType) String() string {
+	switch checksumType {
+	case MD5:
+		return "md5"
+	case SHA1:
+		return "sha1"
+	case SHA256:
+		return "sha256"
+	case SHA512:
+		return "sha512"
+	default:
+		return "unknown"
+	}
 }

@@ -29,9 +29,9 @@ func workerReset() {
 			}
 
 			// Also clean up mtimes
-			RemoveChecksumXattr(currentJob.path, "mtime")
+			RemoveTimeXattr(currentJob.path, "mtime")
 			// Also clean up checkedtime
-			RemoveChecksumXattr(currentJob.path, "checkedtime")
+			RemoveTimeXattr(currentJob.path, "checkedtime")
 
 			return nil
 		}()

@@ -14,7 +14,7 @@ type job struct {
 	checksumMTime int64
 	dataRate      datarate.DatarateSIByte
 	duration      time.Duration
-	hashers       map[string]hash.Hash
+	hashers       map[ChecksumType]hash.Hash
 	mtime         int64
 	path          string
 }
@@ -34,7 +34,7 @@ func newJob(path string, info os.FileInfo) job {
 }
 
 func (j *job) initalizeChecksums() {
-	j.hashers = make(map[string]hash.Hash)
+	j.hashers = make(map[ChecksumType]hash.Hash)
 
 	for checksumAlgo := range checksumLookupTable {
 		j.hashers[checksumAlgo] = checksumLookupTable[checksumAlgo].New()

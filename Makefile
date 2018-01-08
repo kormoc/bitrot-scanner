@@ -1,6 +1,9 @@
 all:
 	go build -ldflags "-X main.Version=$(shell git describe --tags)"
 
+test:
+	go test -bench=. ./...
+
 deps:
 	rm -rvf Godeps vendor
 	godep save ./...

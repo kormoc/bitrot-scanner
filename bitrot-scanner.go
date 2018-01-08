@@ -70,7 +70,7 @@ func main() {
 	sort.Slice(allJobs,
 		func(i, j int) bool {
 			if allJobs[i].checkedTime == allJobs[j].checkedTime {
-				return allJobs[i].path < allJobs[j].path
+				return allJobs[i].path.String() < allJobs[j].path.String()
 			}
 			return allJobs[i].checkedTime < allJobs[j].checkedTime
 		})

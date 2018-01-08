@@ -44,7 +44,7 @@ func workerStart() {
 				return nil
 			}
 
-			currentJob.checksumMTime = GetMTimeXattr(currentJob.path)
+			currentJob.checksumMTime = GetMTimeXattr(currentJob.path.String())
 
 			// Validate that the file hasn't received a new mtime
 			if currentJob.checksumMTime != 0 && currentJob.mtime > currentJob.checksumMTime {

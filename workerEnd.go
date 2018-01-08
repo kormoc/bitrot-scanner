@@ -27,12 +27,12 @@ func workerEnd() {
 			for checksumAlgo := range currentJob.hashers {
 				currentHash := hex.EncodeToString(currentJob.hashers[checksumAlgo].Sum(nil))
 
-				checksumValue := GetChecksumXattr(currentJob.path, checksumAlgo)
+				checksumValue := GetChecksumXattr(currentJob.path.String(), checksumAlgo)
 
 				// If the checksum is missing, just store it
 				if len(checksumValue) == 0 {
-					SetMTimeXattr(currentJob.path, currentJob.mtime)
-					SetChecksumXattr(currentJob.path, checksumAlgo, currentHash)
+					SetMTimeXattr(currentJob.path.String(), currentJob.mtime)
+					SetChecksumXattr(currentJob.path.String(), checksumAlgo, currentHash)
 					continue
 				}
 
@@ -45,8 +45,8 @@ func workerEnd() {
 				// if this happens
 				if currentJob.mtime > currentJob.checksumMTime && config.UpdateOnNewMTime {
 					Warn.Printf("%v: Updating checksum due to updated mtime\n", currentJob.path)
-					SetMTimeXattr(currentJob.path, currentJob.mtime)
-					SetChecksumXattr(currentJob.path, checksumAlgo, currentHash)
+					SetMTimeXattr(currentJob.path.String(), currentJob.mtime)
+					SetChecksumXattr(currentJob.path.String(), checksumAlgo, currentHash)
 					continue
 				}
 
@@ -59,7 +59,7 @@ func workerEnd() {
 				Error.Printf("%v: CHECKSUM MISMATCH!\n\tComputed: %v\n\tExpected: %v\n", currentJob.path, currentHash, checksumValue)
 			}
 
-			SetCheckedTimeXattr(currentJob.path, time.Now().Unix())
+			SetCheckedTimeXattr(currentJob.path.String(), time.Now().Unix())
 
 			duration := time.Since(time_start)
 			currentJob.duration += duration

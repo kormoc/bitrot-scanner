@@ -33,9 +33,9 @@ func workerIO() {
 			time_start := time.Now()
 			Trace.Printf("%v: IO Processing...\n", currentJob.path)
 			// Try direct io. Fail back to normal IO if needed
-			fp, err := directio.OpenFile(currentJob.path, os.O_RDONLY, 0000)
+			fp, err := directio.OpenFile(currentJob.path.String(), os.O_RDONLY, 0000)
 			if err != nil {
-				fp, err = os.OpenFile(currentJob.path, os.O_RDONLY, 0000)
+				fp, err = os.OpenFile(currentJob.path.String(), os.O_RDONLY, 0000)
 				if err != nil {
 					return err
 				}

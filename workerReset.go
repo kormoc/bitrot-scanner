@@ -25,13 +25,13 @@ func workerReset() {
 
 		err := func() error {
 			for _, checksumAlgo := range allChecksumAlgos {
-				RemoveChecksumXattr(currentJob.path, checksumAlgo)
+				RemoveChecksumXattr(currentJob.path.String(), checksumAlgo)
 			}
 
 			// Also clean up mtimes
-			RemoveTimeXattr(currentJob.path, "mtime")
+			RemoveTimeXattr(currentJob.path.String(), "mtime")
 			// Also clean up checkedtime
-			RemoveTimeXattr(currentJob.path, "checkedtime")
+			RemoveTimeXattr(currentJob.path.String(), "checkedtime")
 
 			return nil
 		}()

@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/kormoc/bitrot-scanner/pathing"
 	"github.com/kormoc/unit/datarate"
 )
 
@@ -16,15 +17,16 @@ type job struct {
 	duration      time.Duration
 	hashers       map[ChecksumType]hash.Hash
 	mtime         int64
-	path          string
+	path          *pathing.Path
 }
 
 func newJob(path string, info os.FileInfo) job {
+	p, _ := pathing.New(path)
 	j := job{
 		checkedTime:   GetCheckedTimeXattr(path),
 		checksumCount: checksumCount(path),
 		mtime:         info.ModTime().Unix(),
-		path:          path,
+		path:          p,
 	}
 
 	Trace.Printf("%v: Created job - mtime: %v\n", j.path, j.mtime)

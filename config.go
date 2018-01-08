@@ -24,6 +24,7 @@ var config = struct {
 	ResetXattrs      bool   `yaml:"resetXattrs"`
 	SkipCreate       bool   `yaml:"skipCreate"`
 	SkipValidation   bool   `yaml:"skipValidation"`
+	SortedJobs       bool   `yaml:"sortedJobs"`
 	UpdateOnNewMTime bool   `yaml:"updateOnNewMTime"`
 	Version          bool   `yaml:"version"`
 	WorkerCount      int    `yaml:"workerCount"`
@@ -44,6 +45,7 @@ var config = struct {
 	ResetXattrs:      false,
 	SkipCreate:       false,
 	SkipValidation:   false,
+	SortedJobs:       true,
 	UpdateOnNewMTime: false,
 	Version:          false,
 	WorkerCount:      0,
@@ -64,6 +66,7 @@ func processFlags() (err error) {
 	flag.BoolVar(&config.ResetXattrs, "resetXattrs", config.ResetXattrs, "Don't checksum, just reset any potential checksums")
 	flag.BoolVar(&config.SkipCreate, "skipCreate", config.SkipCreate, "Skip creating new hashes. Useful for just validating existing hashes")
 	flag.BoolVar(&config.SkipValidation, "skipValidation", config.SkipValidation, "Skip validating existing hashes. Useful to just generate for new files")
+	flag.BoolVar(&config.SortedJobs, "sortedJobs", config.SortedJobs, "Sort the jobs by age on the last check. Useful for timed runs")
 	flag.BoolVar(&config.UpdateOnNewMTime, "updateOnNewMTime", config.UpdateOnNewMTime, "Update hashes if mtime is newer then last check time")
 	flag.BoolVar(&config.Version, "version", config.Version, "Display the version")
 	flag.Int64Var(&config.MaxRunTime, "maxRunTime", config.MaxRunTime, "Stop queueing new jobs after maxRunTime seconds. 0 to disable")

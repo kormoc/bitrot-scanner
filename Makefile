@@ -6,6 +6,7 @@ test:
 
 deps:
 	rm -rvf Godeps vendor
+	godep get
 	godep save ./...
 
 version:

@@ -18,6 +18,7 @@ targets:
   ubuntu-12.04:
   ubuntu-14.04:
   ubuntu-16.04:
+  ubuntu-18.04:
 
 before:
   - sed -i'' s/__BITROT_SCANNER_VERSION__/$(git describe --tags)/ version.go

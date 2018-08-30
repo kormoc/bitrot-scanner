@@ -36,29 +36,26 @@ func workerIO() {
 			fp, err := directio.OpenFile(currentJob.path.String(), os.O_RDONLY, 0000)
 			if err != nil {
 				fp, err = os.OpenFile(currentJob.path.String(), os.O_RDONLY, 0000)
-				if err != nil {
-					return err
-				}
+			}
+			if err != nil {
+				return err
 			}
 
 			defer fp.Close()
 
-			buffer := directio.AlignedBlock(directio.BlockSize * config.BufferSize)
-			totalRead := 0
+			writers := make([]io.Writer, 0, len(currentJob.hashers))
+			for checksumAlgo := range currentJob.hashers {
+				writers = append(writers, currentJob.hashers[checksumAlgo])
+			}
 
-			for {
-				amountRead, err := io.ReadAtLeast(fp, buffer, 1)
-				totalRead += amountRead
-				if err == io.EOF {
-					break
-				}
-				if err != nil {
-					return err
-				}
+			totalRead, err := io.CopyBuffer(
+				io.MultiWriter(writers...),
+				fp,
+				directio.AlignedBlock(directio.BlockSize*config.BufferSize),
+			)
 
-				for checksumAlgo := range currentJob.hashers {
-					currentJob.hashers[checksumAlgo].Write(buffer[:amountRead])
-				}
+			if err != nil {
+				return err
 			}
 
 			duration := time.Since(time_start)

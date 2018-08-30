@@ -39,7 +39,7 @@ func (j *job) initalizeChecksums() {
 	j.hashers = make(map[ChecksumType]hash.Hash)
 
 	for checksumAlgo := range checksumLookupTable {
-		j.hashers[checksumAlgo] = checksumLookupTable[checksumAlgo].New()
+		j.hashers[checksumAlgo] = checksumLookupTable[checksumAlgo]()
 	}
 }
 

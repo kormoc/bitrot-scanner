@@ -2,23 +2,28 @@ package main
 
 import (
 	"crypto"
+	"hash"
 	"strings"
+
+	// Checksum algos
+
+	_ "crypto/md5"
+
+	_ "crypto/sha1"
+
+	_ "crypto/sha512"
+
+	"github.com/minio/sha256-simd"
 )
 
-// Checksum algos
-import (
-	_ "crypto/md5"
-	_ "crypto/sha1"
-	_ "crypto/sha256"
-	_ "crypto/sha512"
-)
+type checksumNewFunc func() hash.Hash
 
 // Man, why don't people allow their table to be exported...
-var checksumLookupTable = map[ChecksumType]crypto.Hash{
-	MD5:    crypto.MD5,
-	SHA1:   crypto.SHA1,
-	SHA256: crypto.SHA256,
-	SHA512: crypto.SHA512,
+var checksumLookupTable = map[ChecksumType]checksumNewFunc{
+	MD5:    crypto.MD5.New,
+	SHA1:   crypto.SHA1.New,
+	SHA256: sha256.New,
+	SHA512: crypto.SHA512.New,
 }
 
 var allChecksumAlgos []ChecksumType
@@ -34,12 +39,9 @@ func init() {
 
 func filterChecksumAlgos() {
 	i := strings.Split(config.Checksums, ",")
-	var j = map[ChecksumType]crypto.Hash{}
+	var j = map[ChecksumType]checksumNewFunc{}
 	for _, checksum := range i {
 		csumtype := StringToChecksumType(checksum)
-		if checksumLookupTable[csumtype].Available() == false {
-			Error.Fatalf("Unsupported checksum algorithm: %v\n", checksum)
-		}
 		j[csumtype] = checksumLookupTable[csumtype]
 	}
 	checksumLookupTable = j

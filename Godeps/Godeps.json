@@ -28,6 +28,10 @@
 			"Rev": "50cd3fe62d33758757832edc287fd00dda62ea42"
 		},
 		{
+			"ImportPath": "github.com/minio/sha256-simd",
+			"Rev": "ad98a36ba0da87206e3378c556abbfeaeaa98668"
+		},
+		{
 			"ImportPath": "github.com/ncw/directio",
 			"Rev": "17018d97cb6f2cd62f84c69903d327e596b7a93e"
 		},

@@ -29,6 +29,8 @@ targets:
     default_dependencies: false
   ubuntu-18.04:
     default_dependencies: false
+  ubuntu-20.04:
+    default_dependencies: false
 
 before:
   - sed -i'' s/__BITROT_SCANNER_VERSION__/$(git describe --tags)/ version.go
